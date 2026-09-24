@@ -94,7 +94,8 @@ const sidebar = [
 
   <script>
     const sections = [...document.querySelectorAll('main h2[id]')];
-    const sectionLinks = [...document.querySelectorAll('.sidebar-content a[href*="#"]')];
+    const navigationLinks = [...document.querySelectorAll('.sidebar-content a[href^="/docs/"]')];
+    const sectionLinks = navigationLinks.filter((link) => link.getAttribute('href')?.includes('#'));
 
     const updateActiveSection = () => {
       const marker = window.scrollY + 150;
@@ -104,17 +105,21 @@ const sidebar = [
         if (section.offsetTop <= marker) current = section.id;
       }
 
+      navigationLinks.forEach((link) => link.removeAttribute('aria-current'));
       sectionLinks.forEach((link) => {
         const isCurrent = link.getAttribute('href')?.endsWith(`#${current}`);
         if (isCurrent) link.setAttribute('aria-current', 'page');
-        else link.removeAttribute('aria-current');
       });
+
+      if (!window.location.hash) {
+        navigationLinks.find((link) => link.getAttribute('href') === '/docs/')?.setAttribute('aria-current', 'page');
+      }
     };
 
     window.addEventListener('scroll', updateActiveSection, { passive: true });
     window.addEventListener('hashchange', updateActiveSection);
-    sectionLinks.forEach((link) => link.addEventListener('click', () => {
-      sectionLinks.forEach((item) => item.removeAttribute('aria-current'));
+    navigationLinks.forEach((link) => link.addEventListener('click', () => {
+      navigationLinks.forEach((item) => item.removeAttribute('aria-current'));
       link.setAttribute('aria-current', 'page');
     }));
     updateActiveSection();
