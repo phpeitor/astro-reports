@@ -1,201 +1,112 @@
 ---
-import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+
+const sidebar = [
+  {
+    label: 'PHPeitor',
+    items: [
+      { label: 'RENIEC', link: '/docs/' },
+      { label: 'Acceso a la fuente', link: '/docs/#acceso' }
+    ]
+  },
+  {
+    label: 'Dataset',
+    items: [
+      { label: 'Modelo de datos', link: '/docs/#modelo' },
+      { label: 'Visualizaciones', link: '/docs/#visualizaciones' }
+    ]
+  },
+  {
+    label: 'Integracion',
+    items: [{ label: 'Uso en el visor', link: '/docs/#embedding' }]
+  }
+];
 ---
 
-<DashboardLayout title="Documentación | Dataset PHPeitor">
-  <main class="docs-page">
-    <header class="docs-topbar">
-      <a class="docs-brand" href="/docs/">
-        <span class="docs-brand-mark">P</span>
-        <span><strong>PHPeitor</strong><small>Dataset docs</small></span>
-      </a>
-      <div class="docs-search" role="search">
-        <span aria-hidden="true">⌕</span>
-        <span>Buscar en la documentación</span>
-        <kbd>/</kbd>
-      </div>
-      <div class="docs-tools">
-        <a href="/">Visor BI</a>
-        <button type="button" id="docs-theme-toggle" aria-label="Cambiar tema">◐ <span>Tema</span></button>
-      </div>
-    </header>
-    <header class="docs-hero">
-      <a class="docs-back-link" href="/">← Volver al visor</a>
-      <p class="docs-kicker">Documentación de datos</p>
-      <h1>Dataset PHPeitor</h1>
-      <p class="docs-lead">
-        Guía de referencia para consultar el dataset en la instancia Superset y consumir sus reportes desde BI Reports Hub.
-      </p>
-      <a class="docs-primary-link" href="http://161.132.4.164:8090/login/" target="_blank" rel="noreferrer">
-        Abrir instancia PHPeitor
-      </a>
-    </header>
+<StarlightPage
+  frontmatter={{
+    title: 'RENIEC',
+    description: 'Documentacion del dashboard RENIEC y su dataset en PHPeitor.',
+    tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 2 }
+  }}
+  {sidebar}
+>
+  <p class="eyebrow">Dataset documentado</p>
+  <p class="lead">
+    Dashboard de consulta y analisis demografico construido sobre la tabla <code>dbo.reniec</code>
+    en la base <code>SQL Server - BD_CRUCES</code>.
+  </p>
 
-    <div class="docs-layout">
-      <aside class="docs-toc" aria-label="Contenido de la documentación">
-        <p>PHPeitor</p>
-        <a class="is-current" href="#resumen">Introducción</a>
-        <a href="#acceso">Acceso a la fuente</a>
-        <p class="docs-toc-label">Dataset</p>
-        <a href="#modelo">Modelo de datos</a>
-        <a href="#flujo">Flujo recomendado</a>
-        <p class="docs-toc-label">Integración</p>
-        <a href="#embedding">Uso en el visor</a>
-      </aside>
+  <div class="actions">
+    <a class="primary-action" href="http://161.132.4.164:8090/superset/dashboard/16/" target="_blank" rel="noreferrer">
+      Abrir dashboard RENIEC
+    </a>
+    <a class="secondary-action" href="/">Volver al visor BI</a>
+  </div>
 
-      <div class="docs-content">
-        <section class="docs-section" id="resumen">
-          <p class="docs-kicker">01 · Resumen</p>
-          <h2>Qué es PHPeitor</h2>
-          <p>
-            PHPeitor es la fuente externa de datasets y visualizaciones que esta aplicación documenta y puede mostrar como reportes embebidos.
-            La instancia comprobada presenta una pantalla de acceso con el título “Dataset PHPeitor”.
-          </p>
-          <div class="docs-callout docs-callout-warning">
-            <strong>Alcance actual</strong>
-            <span>El catálogo de columnas, tipos, métricas y relaciones no se publica aquí porque requiere validación dentro de la instancia autenticada.</span>
-          </div>
-        </section>
+  <h2 id="resumen">Sinopsis</h2>
+  <p>
+    El dashboard RENIEC permite consultar un registro por DNI y visualizar distribuciones por sexo,
+    estado civil, departamento y grado de instruccion. Esta publicado en la instancia PHPeitor sobre Apache Superset.
+  </p>
 
-        <section class="docs-section" id="acceso">
-          <p class="docs-kicker">02 · Acceso</p>
-          <h2>Consultar la fuente</h2>
-          <ol class="docs-steps">
-            <li>Entrar a la instancia PHPeitor usando una cuenta autorizada.</li>
-            <li>Abrir el menú de datasets y localizar el dataset utilizado por el reporte.</li>
-            <li>Revisar columnas, métricas, filtros y fecha de actualización.</li>
-            <li>Registrar únicamente metadatos no sensibles en esta documentación.</li>
-          </ol>
-          <p class="docs-note">Las credenciales son de uso operativo y no deben escribirse en el código, Markdown, capturas ni variables públicas del frontend.</p>
-        </section>
+  <aside class="sl-callout sl-callout--note">
+    <p class="sl-callout__title">Fuente confirmada</p>
+    <p>Dataset fisico <code>dbo.reniec</code>, ID 32, esquema <code>dbo</code>, conexion “SQL Server - BD_CRUCES”.</p>
+  </aside>
 
-        <section class="docs-section" id="modelo">
-          <p class="docs-kicker">03 · Modelo de datos</p>
-          <h2>Ficha pendiente de validación</h2>
-          <p>Completar esta tabla después de revisar el dataset real en Superset. No sustituir los marcadores por datos inventados.</p>
-          <div class="docs-table-wrap">
-            <table class="docs-table">
-              <thead>
-                <tr>
-                  <th>Elemento</th>
-                  <th>Estado</th>
-                  <th>Qué registrar</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Nombre técnico</td>
-                  <td><span class="docs-status">Pendiente</span></td>
-                  <td>Nombre exacto del dataset y base de datos.</td>
-                </tr>
-                <tr>
-                  <td>Columnas</td>
-                  <td><span class="docs-status">Pendiente</span></td>
-                  <td>Nombre, tipo, descripción, nulabilidad y ejemplo seguro.</td>
-                </tr>
-                <tr>
-                  <td>Métricas</td>
-                  <td><span class="docs-status">Pendiente</span></td>
-                  <td>Fórmula, granularidad, filtros y unidad de medida.</td>
-                </tr>
-                <tr>
-                  <td>Actualización</td>
-                  <td><span class="docs-status">Pendiente</span></td>
-                  <td>Frecuencia, zona horaria y última carga confirmada.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+  <h2 id="acceso">Acceso a la fuente</h2>
+  <ol>
+    <li>Abrir el dashboard <strong>RENIEC</strong> desde el menu de dashboards.</li>
+    <li>Usar el filtro nativo <strong>Buscar DNI</strong> para consultar un registro.</li>
+    <li>Revisar las visualizaciones relacionadas y limpiar el filtro para volver al resumen.</li>
+  </ol>
+  <p class="muted-note">Las credenciales son de uso operativo y no deben escribirse en el codigo ni en esta documentacion.</p>
 
-        <section class="docs-section" id="flujo">
-          <p class="docs-kicker">04 · Flujo recomendado</p>
-          <h2>De dataset a reporte</h2>
-          <div class="docs-flow">
-            <article><span>1</span><h3>Explorar</h3><p>Confirmar el dataset y su granularidad en PHPeitor.</p></article>
-            <article><span>2</span><h3>Definir</h3><p>Documentar métricas, filtros y reglas de negocio.</p></article>
-            <article><span>3</span><h3>Publicar</h3><p>Crear un enlace autorizado para la herramienta BI.</p></article>
-            <article><span>4</span><h3>Registrar</h3><p>Agregar el enlace al visor con módulo y estrategia de embedding.</p></article>
-          </div>
-        </section>
+  <h2 id="modelo">Modelo de datos</h2>
+  <p>La tabla es fisica y admite filtros y agrupaciones por sus columnas. Los campos de identificacion y ubicacion deben tratarse como informacion restringida.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Grupo</th><th>Columnas</th><th>Tipo observado</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Identificacion</td><td><code>DNI</code>, <code>VERIFICADOR</code>, <code>TIPODOC</code></td><td>VARCHAR(50)</td></tr>
+        <tr><td>Persona</td><td><code>PATERNO</code>, <code>MATERNO</code>, <code>NOMBRES</code>, <code>SEXO</code>, <code>NACIMIENTO</code></td><td>VARCHAR(50-150)</td></tr>
+        <tr><td>Ubicacion</td><td><code>UBIGEO</code>, <code>DEPARTAMENTO</code>, <code>PROVINCIA</code>, <code>DISTRITO</code></td><td>VARCHAR(50-100)</td></tr>
+        <tr><td>Complementarios</td><td><code>DIRECCION</code>, <code>EST_CIVIL</code>, <code>MADRE</code>, <code>PADRE</code>, <code>GRADO</code>, <code>FALLECIDO</code> y campos de nacimiento</td><td>VARCHAR(50-400)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="metric-note"><strong>Metrica base:</strong> <code>count</code> con expresion <code>COUNT(*)</code>.</p>
 
-        <section class="docs-section" id="embedding">
-          <p class="docs-kicker">05 · Integración</p>
-          <h2>Uso en BI Reports Hub</h2>
-          <p>El administrador puede registrar la URL de un reporte desde el visor. La aplicación detecta la plataforma y muestra el contenido en un iframe cuando el proveedor lo permite.</p>
-          <div class="docs-callout">
-            <strong>Importante</strong>
-            <span>Un iframe no reemplaza la autenticación. Para reportes privados se necesita una integración oficial y un backend que emita tokens de corta duración.</span>
-          </div>
-        </section>
-      </div>
-    </div>
-  </main>
+  <h2 id="visualizaciones">Visualizaciones</h2>
+  <div class="chart-grid">
+    <article><strong>198 · Poblacion por sexo</strong><span>Grafico de dona basado en <code>reniec_por_sexo</code>.</span></article>
+    <article><strong>199 · Estado civil</strong><span>Soltero, casado, viudo, divorciado y NDF.</span></article>
+    <article><strong>200 · Departamento</strong><span>Distribucion territorial normalizada.</span></article>
+    <article><strong>201 · Grado de instruccion</strong><span>Ranking Top 20 agrupado por grado.</span></article>
+    <article><strong>202 · Consulta por DNI</strong><span>Tabla de detalle limitada a un registro.</span></article>
+  </div>
 
-  <script>
-    const themeButton = document.querySelector('#docs-theme-toggle');
-    themeButton?.addEventListener('click', () => {
-      const nextTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', nextTheme);
-      localStorage.setItem('bi-theme-v1', nextTheme);
-    });
-  </script>
+  <h2 id="embedding">Uso en el visor BI</h2>
+  <p>El dashboard puede registrarse desde el visor como un reporte externo. Para contenido privado se necesita una integracion oficial y un backend que emita tokens de corta duracion.</p>
 
   <style>
-    .docs-page { max-width: none; min-height: 100vh; margin: 0; padding: 0 clamp(1rem, 4vw, 4rem) 5rem; background: #0f1117; color: #e6e9ef; }
-    .docs-topbar { max-width: 1280px; min-height: 4.6rem; margin: 0 auto; display: flex; align-items: center; gap: 2rem; border-bottom: 1px solid #2b303b; }
-    .docs-brand { display: flex; align-items: center; gap: .65rem; color: #f5f7fa; text-decoration: none; white-space: nowrap; }
-    .docs-brand-mark { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: .45rem; color: #111318; background: #f0c674; font-weight: 900; }
-    .docs-brand strong, .docs-brand small { display: block; }
-    .docs-brand small { margin-top: .1rem; color: #8d96a7; font-size: .68rem; }
-    .docs-search { display: flex; align-items: center; gap: .65rem; max-width: 410px; flex: 1; padding: .62rem .8rem; border: 1px solid #303642; border-radius: .45rem; color: #8d96a7; font-size: .85rem; }
-    .docs-search kbd { margin-left: auto; padding: .15rem .4rem; border: 1px solid #3c4350; border-radius: .25rem; color: #aeb6c4; font-size: .7rem; }
-    .docs-tools { display: flex; align-items: center; gap: 1rem; margin-left: auto; font-size: .85rem; }
-    .docs-tools a, .docs-tools button { color: #aeb6c4; text-decoration: none; background: transparent; border: 0; font: inherit; cursor: pointer; }
-    .docs-tools a:hover, .docs-tools button:hover { color: #f0c674; }
-    .docs-hero { max-width: 850px; margin: 0 auto; padding: 4.5rem 0 3.2rem; }
-    .docs-back-link { color: #8d96a7; text-decoration: none; font-size: .85rem; }
-    .docs-back-link:hover { color: #f0c674; }
-    .docs-kicker { margin: 0 0 .65rem; color: #f0c674; font-size: .72rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
-    .docs-hero h1 { margin: 0; color: #f7f8fa; font-size: clamp(2.5rem, 7vw, 5.7rem); line-height: .96; letter-spacing: -.06em; }
-    .docs-lead { color: #aeb6c4; font-size: 1.1rem; line-height: 1.7; max-width: 650px; }
-    .docs-primary-link { display: inline-flex; padding: .72rem 1rem; border-radius: .35rem; color: #14161b; background: #f0c674; text-decoration: none; font-size: .9rem; font-weight: 800; }
-    .docs-layout { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 205px minmax(0, 820px); gap: clamp(2rem, 7vw, 6rem); align-items: start; }
-    .docs-toc { position: sticky; top: 1.5rem; display: grid; gap: .62rem; padding-top: .4rem; }
-    .docs-toc p { margin: 0 0 .25rem; color: #f0f2f5; font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
-    .docs-toc .docs-toc-label { margin-top: 1.1rem; color: #697386; }
-    .docs-toc a { padding: .3rem .65rem; border-left: 1px solid transparent; color: #8d96a7; text-decoration: none; font-size: .88rem; }
-    .docs-toc a:hover, .docs-toc a.is-current { border-left-color: #f0c674; color: #f0c674; }
-    .docs-section { padding: 2.4rem 0; border-top: 1px solid #2b303b; scroll-margin-top: 1rem; }
-    .docs-section h2 { margin: 0 0 .8rem; color: #f7f8fa; font-size: clamp(1.6rem, 3vw, 2.35rem); letter-spacing: -.035em; }
-    .docs-section p { color: #aeb6c4; line-height: 1.75; }
-    .docs-callout { display: grid; gap: .35rem; margin-top: 1.4rem; padding: 1rem 1.1rem; border-left: 3px solid #f0c674; background: #191d25; border-radius: 0 .35rem .35rem 0; }
-    .docs-callout span { color: #aeb6c4; line-height: 1.6; }
-    .docs-callout-warning { border-color: #c58b20; }
-    .docs-note { font-size: .9rem; }
-    .docs-steps { display: grid; gap: .85rem; padding-left: 1.3rem; color: #aeb6c4; line-height: 1.65; }
-    .docs-table-wrap { overflow-x: auto; border: 1px solid #303642; border-radius: .35rem; }
-    .docs-table { width: 100%; border-collapse: collapse; min-width: 600px; text-align: left; }
-    .docs-table th, .docs-table td { padding: .85rem 1rem; border-bottom: 1px solid #303642; vertical-align: top; }
-    .docs-table th { color: #8d96a7; font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; }
-    .docs-table td { color: #e6e9ef; font-size: .92rem; }
-    .docs-table tr:last-child td { border-bottom: 0; }
-    .docs-status { display: inline-flex; padding: .25rem .55rem; border-radius: 999px; color: #8a5b00; background: #fff1c7; font-size: .75rem; font-weight: 800; }
-    .docs-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
-    .docs-flow article { padding: 1rem; border: 1px solid #303642; border-radius: .35rem; background: #191d25; }
-    .docs-flow span { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%; color: #14161b; background: #f0c674; font-weight: 800; }
-    .docs-flow h3 { margin: 1rem 0 .25rem; }
-    .docs-flow p { margin: 0; font-size: .88rem; line-height: 1.55; }
-    @media (max-width: 760px) {
-      .docs-page { padding-top: 1rem; }
-      .docs-layout { grid-template-columns: 1fr; gap: 1rem; }
-      .docs-topbar { flex-wrap: wrap; gap: 1rem; padding: .8rem 0; }
-      .docs-search { order: 3; flex-basis: 100%; max-width: none; }
-      .docs-tools { margin-left: auto; }
-      .docs-toc { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 1rem; border: 1px solid #303642; border-radius: .35rem; }
-      .docs-toc p { grid-column: 1 / -1; }
-      .docs-flow { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 420px) { .docs-flow { grid-template-columns: 1fr; } }
+    .eyebrow { color: var(--sl-color-text-accent); font-size: var(--sl-text-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .lead { font-size: var(--sl-text-lg); max-width: 52rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1.5rem 0 3rem; }
+    .actions a { border-radius: .25rem; padding: .65rem 1rem; text-decoration: none; font-weight: 600; }
+    .primary-action { color: var(--sl-color-black); background: var(--sl-color-text-accent); }
+    .secondary-action { color: var(--sl-color-text-accent); border: 1px solid var(--sl-color-text-accent); }
+    .muted-note { font-size: var(--sl-text-sm); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; }
+    table { display: table; width: 100%; min-width: 38rem; }
+    th, td { text-align: left; }
+    .metric-note { font-size: var(--sl-text-sm); }
+    .chart-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
+    .chart-grid article { display: grid; gap: .45rem; padding: 1rem; border: 1px solid var(--sl-color-gray-5); border-radius: .35rem; background: var(--sl-color-gray-7); }
+    .chart-grid span { color: var(--sl-color-gray-2); font-size: var(--sl-text-sm); }
+    @media (max-width: 640px) { .chart-grid { grid-template-columns: 1fr; } }
   </style>
-</DashboardLayout>
+</StarlightPage>

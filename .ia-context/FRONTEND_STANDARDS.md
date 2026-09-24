@@ -7,6 +7,7 @@ Ofrecer un visor de reportes y una documentación de datos clara, rápida y usab
 ## Convenciones
 
 - Usar Astro para páginas estáticas y componentes `.astro` para piezas de presentación.
+- La documentación usa `@astrojs/starlight` para el layout, búsqueda Pagefind, navegación lateral, tabla de contenidos y selector de tema.
 - Reutilizar `DashboardLayout` y las variables de `src/styles/global.css` antes de crear otra paleta.
 - Mantener el idioma español y nombres de negocio consistentes: PHPeitor, dataset, reporte, módulo y estado.
 - Usar enlaces externos con `target="_blank"` y `rel="noreferrer"` cuando corresponda.

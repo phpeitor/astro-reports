@@ -1,6 +1,6 @@
 # BI Reports Hub (Astro)
 
-Aplicacion web moderna construida con Astro para gestionar y visualizar reportes BI embebidos (Power BI, Tableau y otras plataformas) dentro de una experiencia tipo dashboard SaaS.
+Aplicacion web moderna construida con Astro para gestionar y visualizar reportes BI embebidos (Power BI, Tableau y otras plataformas) dentro de una experiencia tipo dashboard SaaS. La documentacion usa Astro Starlight.
 
 ## Contexto del proyecto
 
@@ -68,7 +68,9 @@ Importante:
 - src/pages/index.astro
   - Orquestacion principal de UI, login, reglas por rol y eventos de negocio.
 - src/pages/docs/index.astro
-  - Documentacion del dataset PHPeitor, acceso a la instancia y flujo de integracion.
+  - Pagina Starlight con la documentacion del dashboard RENIEC.
+- src/content/config.ts y src/content/docs
+  - Configuracion de la coleccion de documentacion Starlight.
 - src/components/Sidebar.astro
   - Sidebar colapsable con modulos y subitems.
 - src/components/ReportForm.astro

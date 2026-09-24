@@ -6,6 +6,7 @@ BI Reports Hub es un visor de reportes construido con Astro 5 y TypeScript. Cent
 
 - Runtime: Node.js 18+ y npm.
 - Framework: Astro 5, salida estática por defecto.
+- Documentación: Astro Starlight 0.37, con Pagefind para búsqueda.
 - Interfaz y documentación: español.
 - Persistencia actual: `localStorage` del navegador; no existe backend propio.
 - Fuente externa documentada: `http://161.132.4.164:8090/login/`.
