@@ -92,6 +92,34 @@ const sidebar = [
   <h2 id="embedding">Uso en el visor BI</h2>
   <p>El dashboard puede registrarse desde el visor como un reporte externo. Para contenido privado se necesita una integracion oficial y un backend que emita tokens de corta duracion.</p>
 
+  <script>
+    const sections = [...document.querySelectorAll('main h2[id]')];
+    const sectionLinks = [...document.querySelectorAll('.sidebar-content a[href*="#"]')];
+
+    const updateActiveSection = () => {
+      const marker = window.scrollY + 150;
+      let current = sections[0]?.id;
+
+      for (const section of sections) {
+        if (section.offsetTop <= marker) current = section.id;
+      }
+
+      sectionLinks.forEach((link) => {
+        const isCurrent = link.getAttribute('href')?.endsWith(`#${current}`);
+        if (isCurrent) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+      });
+    };
+
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    window.addEventListener('hashchange', updateActiveSection);
+    sectionLinks.forEach((link) => link.addEventListener('click', () => {
+      sectionLinks.forEach((item) => item.removeAttribute('aria-current'));
+      link.setAttribute('aria-current', 'page');
+    }));
+    updateActiveSection();
+  </script>
+
   <style>
     .eyebrow { color: var(--sl-color-text-accent); font-size: var(--sl-text-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
     .lead { font-size: var(--sl-text-lg); max-width: 52rem; }

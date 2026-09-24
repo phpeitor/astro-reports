@@ -6,6 +6,8 @@ export default defineConfig({
     starlight({
       title: 'PHPeitor Docs',
       description: 'Documentacion del dataset PHPeitor',
+      logo: { src: './src/content/docs/phpeitor-docs.svg', alt: 'Docs PHPeitor', replacesTitle: true },
+      customCss: ['./src/styles/starlight.css'],
       defaultLocale: 'root',
       locales: {
         root: { label: 'Español', lang: 'es' }

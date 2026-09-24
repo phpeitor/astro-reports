@@ -1,0 +1,8 @@
+<svg width="248" height="48" viewBox="0 0 248 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Docs PHPeitor</title>
+  <desc id="desc">Documentacion del dataset PHPeitor</desc>
+  <rect x="1" y="1" width="46" height="46" rx="10" fill="#4052E8"/>
+  <path d="M14 13h14.5c4.2 0 7.5 3.3 7.5 7.4s-3.3 7.4-7.5 7.4H20V35h-6V13Zm6 5v5h8.2c1.1 0 2-.9 2-2.5s-.9-2.5-2-2.5H20Z" fill="white"/>
+  <text x="59" y="23" fill="#171A21" font-family="ui-sans-serif, system-ui, sans-serif" font-size="17" font-weight="700">Docs PHPeitor</text>
+  <text x="59" y="38" fill="#6B7280" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="600" letter-spacing="1.2">DATASET</text>
+</svg>
