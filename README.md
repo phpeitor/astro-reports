@@ -67,6 +67,8 @@ Importante:
 
 - src/pages/index.astro
   - Orquestacion principal de UI, login, reglas por rol y eventos de negocio.
+- src/pages/docs/index.astro
+  - Documentacion del dataset PHPeitor, acceso a la instancia y flujo de integracion.
 - src/components/Sidebar.astro
   - Sidebar colapsable con modulos y subitems.
 - src/components/ReportForm.astro
@@ -117,6 +119,10 @@ Pasos:
    - npm run build
 4. Previsualizar build
    - npm run preview
+
+## Documentacion del dataset
+
+La guia esta disponible en `/docs/` durante desarrollo y produccion. Documenta la instancia PHPeitor y el flujo para registrar reportes en el visor, pero no incluye credenciales ni inventa el catalogo de columnas: esos metadatos deben validarse en Superset.
 
 ## Estado actual
 

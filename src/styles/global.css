@@ -125,6 +125,17 @@ body {
   color: var(--danger);
 }
 
+.docs-login-link {
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.docs-login-link:hover {
+  text-decoration: underline;
+}
+
 .icon-bars {
   display: inline-block;
   width: 1rem;
