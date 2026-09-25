@@ -1,8 +1,8 @@
 <svg viewBox="0 0 778 154" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Docs PHPEITOR">
   <title>Docs PHPEITOR</title>
   <style>
-    .main { font: 900 116px/1 Arial Black, Arial, sans-serif; font-style: italic; letter-spacing: -8px; }
-    .sub { font: 900 52px/1 Arial Black, Arial, sans-serif; font-style: italic; letter-spacing: 2px; }
+    .main { font: 900 116px/1 Archivo, Arial Black, Arial, sans-serif; font-style: italic; letter-spacing: -8px; }
+    .sub { font: 900 52px/1 Archivo, Arial Black, Arial, sans-serif; font-style: italic; letter-spacing: 2px; }
     .trace { fill: none; stroke: #F43F5E; stroke-width: 1.5; stroke-dasharray: 70 200; filter: drop-shadow(0 0 3px #F43F5E); animation: trace 5s linear infinite; }
     @keyframes trace { to { stroke-dashoffset: -270px; } }
     @media (prefers-reduced-motion: reduce) { .trace { display: none; } }

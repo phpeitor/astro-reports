@@ -1,6 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,100..900;1,75..125,100..900&display=swap');
+
 :root {
+  --font-display: "Archivo", system-ui, sans-serif;
   --sl-font: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --sl-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+:is(h1, h2, h3, h4, h5, h6, .site-title, .sidebar-content, button) {
+  font-family: var(--font-display);
 }
 
 .site-title img {
