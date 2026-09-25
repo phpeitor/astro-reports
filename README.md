@@ -1,21 +1,21 @@
-# Report Workspace
+# Report Workspace 👨‍🚀
 
 [![forthebadge](https://forthebadge.com/api/badges/generate?panels=2&primaryLabel=Built+with&secondaryLabel=CLAUDE+CODE&primaryBGColor=%23ce744c&secondaryBGColor=%23d75c28&tertiaryBGColor=%23FFFFFF&primaryTextColor=%23FFFFFF&primaryFontSize=13&primaryFontWeight=400&primaryLetterSpacing=1&primaryFontFamily=Verdana&primaryTextTransform=capitalize&secondaryTextColor=%23FFFFFF&secondaryFontSize=12&secondaryFontWeight=900&secondaryLetterSpacing=1&secondaryFontFamily=Montserrat&secondaryTextTransform=uppercase&borderRadius=4&secondaryIcon=claude&secondaryIconColor=%23FFFFFF&secondaryIconSize=15&secondaryIconPosition=right)](https://www.linkedin.com/in/drphp/)
 
 <a href="https://www.instagram.com/amvsoft.tech/">
-  <img src="https://gramotech.net/html/balad/images/rec-event1.jpg" alt="Instagram" width="700">
+  <img src="https://cdn.buttercms.com/xrVbfdR5TBy4iTaY4xl7" alt="Instagram" width="700">
 </a>
 
-El repositorio contiene dos productos en una misma aplicacion:
+El repositorio contiene dos productos en una misma aplicación:
 
-| Area | Ruta | Proposito |
+| Area | Ruta | Propósito |
 | --- | --- | --- |
 | Visor de Reportes | `/` | Login por rol, catalogo, administracion y visualizacion de reportes |
-| PHPeitor Docs | `/docs/` | Documentacion tecnica y funcional basada en Starlight |
+| Docs | `/docs/` | Documentacion tecnica y funcional basada en Starlight |
 
 ## Stack
 
-| Tecnologia | Uso |
+| Tecnología | Uso |
 | --- | --- |
 | [Astro 5](https://astro.build/) | Renderizado estatico, componentes y bundling |
 | [Starlight](https://starlight.astro.build/) | Experiencia de documentacion |
@@ -25,8 +25,8 @@ El repositorio contiene dos productos en una misma aplicacion:
 
 ## Funcionalidad
 
-- Login de demostracion con permisos por rol.
-- Navegacion por modulo y reporte.
+- Login de demostración con permisos por rol.
+- Navegación por modulo y reporte.
 - Alta, edicion, activacion y desactivacion de reportes.
 - Deteccion automatica de plataforma a partir de la URL.
 - Visualizacion por iframe cuando el proveedor permite embedding.
