@@ -8,6 +8,33 @@
   max-height: 4.5rem;
 }
 
+.site-title {
+  width: auto;
+  padding: .3rem .65rem;
+  border-radius: .35rem;
+  background: #fff;
+}
+
+@media (min-width: 50rem) {
+  .sidebar {
+    height: calc(100vh - var(--sl-nav-height));
+    overflow: hidden;
+  }
+
+  .sidebar-pane {
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sl-color-accent) transparent;
+  }
+
+  .sidebar-pane::-webkit-scrollbar { width: .45rem; }
+  .sidebar-pane::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--sl-color-accent);
+  }
+}
+
 @media (max-width: 50rem) {
   .site-title img { width: 14rem; }
 }

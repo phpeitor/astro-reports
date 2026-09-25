@@ -16,16 +16,33 @@
     <span>© 2026 PHPeitor. Uso interno.</span>
     <span>Construido con Astro y Starlight.</span>
   </div>
-  <div class="phpeitor-footer__mark" aria-hidden="true">PHPEITOR</div>
+  <div class="phpeitor-footer__mark" aria-hidden="true"><img src="/phpeitor-docs.svg" alt="" /></div>
 </footer>
+
+<script is:inline>
+  const syncDocumentationFrame = () => {
+    const footer = document.querySelector('.phpeitor-footer');
+    if (!footer) return;
+
+    const footerLeft = footer.getBoundingClientRect().left;
+    footer.style.setProperty('left', '0px', 'important');
+    footer.style.setProperty('margin-left', `${-footerLeft}px`, 'important');
+    footer.style.setProperty('width', `${window.innerWidth}px`, 'important');
+    footer.style.setProperty('max-width', `${window.innerWidth}px`, 'important');
+  };
+
+  syncDocumentationFrame();
+  window.addEventListener('resize', syncDocumentationFrame);
+</script>
 
 <style>
   .phpeitor-footer {
-    width: 100vw;
+    width: 100vw !important;
+    max-width: 100vw !important;
     position: relative;
-    left: 0;
+    left: 0 !important;
     margin-top: 5rem;
-    margin-left: calc(-1 * var(--sl-sidebar-width));
+    margin-left: 0 !important;
     padding: 3.5rem max(1.5rem, calc((100% - 72rem) / 2)) 1.25rem;
     color: #d8dce6;
     background: #17181c;
@@ -62,15 +79,25 @@
   .phpeitor-footer__bottom { padding-top: 2rem; margin-top: 2rem; border-top: 1px solid #30323a; }
   .phpeitor-footer__mark {
     margin-top: 4rem;
-    color: #282a2f;
-    font-size: clamp(5rem, 18vw, 14rem);
-    font-style: italic;
-    font-weight: 900;
-    letter-spacing: -.09em;
-    line-height: .7;
-    text-align: center;
-    transform: skewX(-10deg);
+    height: clamp(8rem, 25vw, 18rem);
+    overflow: hidden;
     user-select: none;
+  }
+  .phpeitor-footer__mark img {
+    display: block;
+    width: min(72rem, 100%);
+    height: auto;
+    margin: 0 auto;
+    opacity: .09;
+    filter: grayscale(1) brightness(1.7);
+    animation: phpeitor-footer-drift 10s ease-in-out infinite alternate;
+  }
+  @keyframes phpeitor-footer-drift {
+    from { transform: translateX(-2%) skewX(-4deg) scale(1.05); }
+    to { transform: translateX(2%) skewX(-4deg) scale(1.12); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .phpeitor-footer__mark img { animation: none; }
   }
   @media (max-width: 640px) {
     .phpeitor-footer { margin-left: 0; }
