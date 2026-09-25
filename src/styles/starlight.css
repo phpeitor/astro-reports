@@ -4,13 +4,18 @@
 }
 
 .site-title img {
-  width: 18rem;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
   max-height: 4.5rem;
+  object-fit: contain;
 }
 
 .site-title {
-  width: auto;
-  max-width: 18.75rem;
+  box-sizing: border-box;
+  width: calc(var(--sl-sidebar-width, 18.75rem) - 3rem);
+  max-width: 100%;
   padding: .3rem .65rem;
   border-radius: .35rem;
   background: #fff;
@@ -42,7 +47,17 @@
   z-index: 1000 !important;
 }
 
+/* The fixed header is already part of the page flow in this layout. */
+.page > .main-frame {
+  padding-block-start: 0 !important;
+}
+
+/* Remove only Starlight's generated title panel, not the documentation panel. */
+.main-pane main > .content-panel:has(h1#_top) {
+  display: none !important;
+}
+
 
 @media (max-width: 50rem) {
-  .site-title img { width: 14rem; }
+  .site-title { width: 100%; }
 }

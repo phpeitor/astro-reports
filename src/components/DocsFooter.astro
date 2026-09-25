@@ -10,7 +10,12 @@
       <a href="http://161.132.4.164:8090/login/" target="_blank" rel="noreferrer">PHPeitor</a>
     </nav>
   </div>
-  <div class="phpeitor-footer__mark" aria-hidden="true"><span>PHPEITOR</span></div>
+  <div class="phpeitor-footer__mark" aria-hidden="true">
+    <svg viewBox="0 0 1500 300" preserveAspectRatio="xMidYMid meet" role="presentation">
+      <text x="750" y="220" text-anchor="middle" class="phpeitor-word">PHPEITOR</text>
+      <text x="750" y="220" text-anchor="middle" class="phpeitor-trace">PHPEITOR</text>
+    </svg>
+  </div>
 </footer>
 
 <script is:inline>
@@ -74,43 +79,32 @@
     user-select: none;
   }
   .phpeitor-footer__mark::before {
-    position: absolute;
-    inset: 18% 1% 12%;
-    border: 2px solid transparent;
-    border-top-color: #f43f5e;
-    border-right-color: #4052e8;
-    border-bottom-color: #f43f5e;
-    border-radius: 50%;
-    content: '';
-    animation: phpeitor-footer-snake 4s linear infinite;
+    content: none;
   }
-  .phpeitor-footer__mark span {
-    position: relative;
-    z-index: 1;
-    color: #060c3b;
-    width: 100%;
-    font-size: clamp(5rem, 19vw, 19rem);
+  .phpeitor-footer__mark svg { width: 100%; height: 100%; overflow: visible; }
+  .phpeitor-word,
+  .phpeitor-trace {
+    font-family: Arial Black, Arial, sans-serif;
+    font-size: 190px;
     font-style: italic;
     font-weight: 900;
-    letter-spacing: -.12em;
-    line-height: .7;
-    white-space: nowrap;
-    text-align: center;
-    -webkit-text-stroke: 2px #f43f5e;
-    text-shadow: 0 0 4px #f43f5e, 0 0 18px rgba(244, 63, 94, .45);
-    transform: skewX(-10deg);
-    animation: phpeitor-footer-glow 4s ease-in-out infinite alternate;
+    letter-spacing: -10px;
   }
-  @keyframes phpeitor-footer-snake {
-    from { transform: rotate(-2deg) scaleX(1); }
-    to { transform: rotate(2deg) scaleX(1.04); }
+  .phpeitor-word { fill: #060c3b; stroke: #060c3b; stroke-width: 3; }
+  .phpeitor-trace {
+    fill: none;
+    stroke: #f43f5e;
+    stroke-width: 3;
+    stroke-dasharray: 42 260;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 5px #f43f5e);
+    animation: phpeitor-letter-trace 5s linear infinite;
   }
-  @keyframes phpeitor-footer-glow {
-    from { -webkit-text-stroke-color: #f43f5e; text-shadow: 0 0 3px #f43f5e, 0 0 12px rgba(244, 63, 94, .35); }
-    to { -webkit-text-stroke-color: #4052e8; text-shadow: 0 0 8px #f43f5e, 0 0 28px rgba(64, 82, 232, .5); }
+  @keyframes phpeitor-letter-trace {
+    to { stroke-dashoffset: -302px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .phpeitor-footer__mark::before { animation: none; }
+    .phpeitor-trace { animation: none; }
   }
   @media (max-width: 640px) {
     .phpeitor-footer { margin-left: 0; padding-inline: 1.5rem; }

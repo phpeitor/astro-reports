@@ -25,12 +25,13 @@ const sidebar = [
 
 <StarlightPage
   frontmatter={{
-    title: 'RENIEC',
-    description: 'Documentacion del dashboard RENIEC y su dataset en PHPeitor.',
+    title: 'Reniec',
+    description: 'Documentacion del dashboard Reniec y su dataset en PHPeitor.',
     tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 2 }
   }}
   {sidebar}
 >
+  <h1 class="page-title">Reniec</h1>
   <p class="eyebrow">Dataset documentado</p>
   <p class="lead">
     Dashboard de consulta y analisis demografico construido sobre la tabla <code>dbo.reniec</code>
@@ -93,6 +94,8 @@ const sidebar = [
   <p>El dashboard puede registrarse desde el visor como un reporte externo. Para contenido privado se necesita una integracion oficial y un backend que emita tokens de corta duracion.</p>
 
   <script is:inline>
+    document.querySelector('main > .content-panel:first-child')?.remove();
+
     const sections = [...document.querySelectorAll('main h2[id]')];
     const navigationLinks = [...document.querySelectorAll('.sidebar-content a[href^="/docs/"]')];
     const sectionLinks = navigationLinks.filter((link) => link.getAttribute('href')?.includes('#'));
@@ -126,6 +129,7 @@ const sidebar = [
   </script>
 
   <style>
+    .page-title { margin: 0 0 1.5rem; font-size: var(--sl-text-h1); line-height: var(--sl-line-height-headings); font-weight: 600; color: var(--sl-color-white); }
     .eyebrow { color: var(--sl-color-text-accent); font-size: var(--sl-text-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
     .lead { font-size: var(--sl-text-lg); max-width: 52rem; }
     .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1.5rem 0 3rem; }
