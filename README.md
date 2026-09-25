@@ -1,6 +1,13 @@
-# PHPeitor Report Workspace
+# Report Workspace
 
-Portal estatico para centralizar, administrar y visualizar reportes de distintas plataformas BI. Esta construido con Astro 5, usa Starlight para la documentacion y Rive para la experiencia interactiva de acceso.
+[![forthebadge](https://forthebadge.com/api/badges/community/019dfdfb-360e-7c28-a793-c42c10006a1f.svg)](https://www.linkedin.com/in/drphp/)
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](https://www.linkedin.com/in/drphp/)
+
+<a href="https://www.instagram.com/amvsoft.tech/">
+  <img src="https://gramotech.net/html/balad/images/rec-event1.jpg" alt="Instagram" width="700">
+</a>
+
+Portal estatico para centralizar, administrar y visualizar reportes de distintas plataformas BI. Esta construido con Astro, usa Starlight para la documentación y Rive para la experiencia interactiva de acceso.
 
 El repositorio contiene dos productos en una misma aplicacion:
 
@@ -33,14 +40,14 @@ El repositorio contiene dos productos en una misma aplicacion:
 - Login Rive conectado a hover, foco, tema y eventos de la animacion.
 - Documentacion Starlight con busqueda, partners y footer personalizado.
 
-## Inicio rapido
+## Inicio rápido
 
 ### Requisitos
 
 - Node.js 20 LTS o superior recomendado.
 - npm 10 o superior.
 
-### Instalacion
+### Instalación
 
 ```bash
 npm install
@@ -51,7 +58,7 @@ La aplicacion queda disponible en `http://localhost:4321`.
 
 No inicies una segunda instancia si el puerto `4321` ya esta ocupado. Astro intentara usar otro puerto y podrias terminar revisando una version distinta de la aplicacion.
 
-### Validacion
+### Validación
 
 ```bash
 npm run validate
@@ -69,7 +76,7 @@ Este comando ejecuta el diagnostico de Astro/TypeScript y luego genera el build 
 | `npm run preview` | Sirve localmente el build generado |
 | `npm run validate` | Ejecuta check y build en secuencia |
 
-## Usuarios de demostracion
+## Usuarios de demostración
 
 La autenticacion actual es una simulacion frontend sin contrasena. Los usuarios se definen en `src/data/initialReports.ts`.
 
@@ -212,7 +219,7 @@ localStorage.removeItem('bi-reports-v2');
 location.reload();
 ```
 
-## Integracion Rive
+## Integración Rive
 
 El login carga `src/content/docs/astro.riv` con `@rive-app/canvas`.
 
@@ -227,7 +234,7 @@ La UI conecta inputs del state machine con hover, foco, cambio de tema y control
 
 El runtime marca algunos metodos de State Machine como legacy. Actualmente son necesarios para este archivo `.riv`; una migracion futura debe mover la animacion a View Model/Data Binding.
 
-## Documentacion Starlight
+## Documentación Starlight
 
 La documentacion vive en `/docs/` e incluye:
 
@@ -254,9 +261,9 @@ DocumentRoot "C:/Apache24/htdocs/astro-reports/dist"
 DirectoryIndex index.html
 ```
 
-La integracion de sitemap requiere configurar `site` en `astro.config.mjs`. Mientras no exista una URL publica definitiva, Astro omitira el sitemap y mostrara un warning durante el build.
+La integración de sitemap requiere configurar `site` en `astro.config.mjs`. Mientras no exista una URL publica definitiva, Astro omitira el sitemap y mostrara un warning durante el build.
 
-## Seguridad y paso a produccion
+## Seguridad y paso a producción
 
 Antes de usar el proyecto con reportes privados:
 
@@ -268,7 +275,7 @@ Antes de usar el proyecto con reportes privados:
 6. Agregar CSP, auditoria, expiracion de sesion y proteccion CSRF.
 7. Evitar `Publish to web` para informacion interna o sensible.
 
-## Solucion de problemas
+## Solución de problemas
 
 ### El puerto 4321 esta ocupado
 
@@ -282,7 +289,7 @@ El catalogo persistido tiene prioridad. Elimina `bi-reports-v2` desde DevTools y
 
 Revisa `X-Frame-Options` y `Content-Security-Policy`. Si el proveedor bloquea framing, usa `external-link` o su SDK oficial.
 
-### El login no muestra la animacion
+### El login no muestra la animación
 
 Comprueba que `astro.riv` exista, que el artboard/state machine mantengan sus nombres y que el canvas no tenga errores en consola.
 
