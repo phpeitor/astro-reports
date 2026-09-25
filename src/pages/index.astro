@@ -113,8 +113,8 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
 
   <script type="module" define:vars={{ serializedReports, serializedUsers }}>
     /** @typedef {'admin' | 'operaciones' | 'finanzas' | 'comercial'} AppRole */
-    /** @typedef {'powerbi' | 'tableau' | 'other'} BiPlatform */
-    /** @typedef {'iframe-public' | 'official-sdk' | 'secure-token'} EmbedStrategy */
+    /** @typedef {'powerbi' | 'tableau' | 'superset' | 'qlik' | 'grafana' | 'looker' | 'other'} BiPlatform */
+    /** @typedef {'iframe-public' | 'external-link' | 'official-sdk' | 'secure-token'} EmbedStrategy */
 
     /** @typedef {{
      * id: string;
@@ -131,7 +131,7 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
 
     /** @typedef {{ user: string; role: AppRole; displayName?: string }} UserItem */
 
-    const REPORTS_KEY = 'bi-reports-v1';
+    const REPORTS_KEY = 'bi-reports-v2';
     const AUTH_KEY = 'bi-auth-v1';
     const THEME_KEY = 'bi-theme-v1';
 
@@ -157,12 +157,14 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
     const appRoot = document.querySelector('#app-root');
     const sessionNote = document.querySelector('#session-note');
     const sidebarSession = document.querySelector('#sidebar-session');
-    const sidebarMenu = document.querySelector('#sidebar-menu');
     const sidebarModules = document.querySelector('#sidebar-modules');
     const reportForm = document.querySelector('#report-form');
     const reportMeta = document.querySelector('#report-meta');
     const platformChip = document.querySelector('#platform-chip');
     const reportFrame = document.querySelector('#report-frame');
+    const externalReport = document.querySelector('#external-report');
+    const externalReportTitle = document.querySelector('#external-report-title');
+    const externalReportLink = document.querySelector('#external-report-link');
     const formMessage = document.querySelector('#form-message');
     const reportsTableBody = document.querySelector('#reports-table-body');
     const tablePagination = document.querySelector('#table-pagination');
@@ -311,6 +313,22 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
         return 'tableau';
       }
 
+      if (lowered.includes('superset')) {
+        return 'superset';
+      }
+
+      if (lowered.includes('qlik')) {
+        return 'qlik';
+      }
+
+      if (lowered.includes('grafana')) {
+        return 'grafana';
+      }
+
+      if (lowered.includes('lookerstudio') || lowered.includes('datastudio')) {
+        return 'looker';
+      }
+
       return 'other';
     }
 
@@ -337,6 +355,10 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
         }
 
         return 'official-sdk';
+      }
+
+      if (platform === 'superset' || platform === 'qlik' || platform === 'grafana') {
+        return 'external-link';
       }
 
       return 'iframe-public';
@@ -377,12 +399,6 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
 
       const moduleName = getRoleModule(role);
       return activeReports.filter((report) => report.module === moduleName);
-    }
-
-    /** @param {AppRole} role */
-    function getAllowedModules(role = session?.role ?? 'admin') {
-      const visibleReports = getVisibleReports(role);
-      return [...new Set(visibleReports.map((report) => report.module))].sort((a, b) => a.localeCompare(b, 'es'));
     }
 
     function ensureSelection() {
@@ -447,28 +463,16 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
     }
 
     function renderSidebar() {
-      if (!sidebarMenu || !sidebarModules) {
+      if (!sidebarModules) {
         return;
       }
 
       if (!session) {
-        sidebarMenu.innerHTML = '';
         sidebarModules.innerHTML = '';
         return;
       }
 
       const visibleReports = getVisibleReports();
-      const modules = getAllowedModules();
-
-      sidebarMenu.innerHTML = modules
-        .map((moduleName) => {
-          const activeClass = moduleName === selectedModule ? 'active' : '';
-          const count = visibleReports.filter((report) => report.module === moduleName).length;
-          const label = escapeHtml(moduleName);
-          const badge = escapeHtml(shortLabel(moduleName));
-          return `<button class="menu-item has-tooltip ${activeClass}" type="button" data-module="${label}" data-tooltip="${label}" aria-label="${label}"><span class="menu-icon" aria-hidden="true">${badge}</span><span class="menu-label">${label}</span><span class="menu-count">${count}</span></button>`;
-        })
-        .join('');
 
       const grouped = visibleReports.reduce((acc, report) => {
         if (!acc[report.module]) {
@@ -561,7 +565,11 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
                   <select class="table-input" data-edit-field="platform" data-edit-id="${report.id}">
                     <option value="powerbi" ${report.platform === 'powerbi' ? 'selected' : ''}>Power BI</option>
                     <option value="tableau" ${report.platform === 'tableau' ? 'selected' : ''}>Tableau</option>
-                    <option value="other" ${report.platform === 'other' ? 'selected' : ''}>Other</option>
+                    <option value="superset" ${report.platform === 'superset' ? 'selected' : ''}>Apache Superset</option>
+                    <option value="qlik" ${report.platform === 'qlik' ? 'selected' : ''}>Qlik Sense</option>
+                    <option value="grafana" ${report.platform === 'grafana' ? 'selected' : ''}>Grafana</option>
+                    <option value="looker" ${report.platform === 'looker' ? 'selected' : ''}>Looker Studio</option>
+                    <option value="other" ${report.platform === 'other' ? 'selected' : ''}>Otra</option>
                   </select>
                 </td>
                 <td>
@@ -746,7 +754,7 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
     }
 
     function updateViewer() {
-      if (!reportMeta || !platformChip || !reportFrame) {
+      if (!reportMeta || !platformChip || !reportFrame || !externalReport || !externalReportTitle || !externalReportLink) {
         return;
       }
 
@@ -757,6 +765,8 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
         reportMeta.textContent = 'No hay reportes disponibles para este rol.';
         platformChip.textContent = 'Sin datos';
         reportFrame.removeAttribute('src');
+        reportFrame.hidden = false;
+        externalReport.hidden = true;
         return;
       }
 
@@ -764,14 +774,21 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
       selectedModule = selected.module;
       reportMeta.textContent = `${selected.module} | ${selected.name}`;
       platformChip.textContent = `${selected.platform.toUpperCase()} | ${selected.strategy}`;
-      reportFrame.src = normalizeUrl(selected.url);
+      const opensExternally = selected.strategy === 'external-link';
+      reportFrame.hidden = opensExternally;
+      externalReport.hidden = !opensExternally;
+
+      if (opensExternally) {
+        reportFrame.removeAttribute('src');
+        externalReportTitle.textContent = selected.name;
+        externalReportLink.setAttribute('href', selected.url);
+      } else {
+        reportFrame.src = normalizeUrl(selected.url);
+        externalReportLink.removeAttribute('href');
+      }
 
       document.querySelectorAll('.report-link').forEach((link) => {
         link.classList.toggle('active', link.getAttribute('data-report-id') === selected.id);
-      });
-
-      document.querySelectorAll('.menu-item').forEach((button) => {
-        button.classList.toggle('active', button.getAttribute('data-module') === selected.module);
       });
 
       document.querySelectorAll('.module-group').forEach((details) => {
@@ -780,26 +797,6 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
     }
 
     function bindSidebarActions() {
-      document.querySelectorAll('.menu-item').forEach((button) => {
-        button.addEventListener('click', () => {
-          const moduleName = button.getAttribute('data-module');
-          if (!moduleName) {
-            return;
-          }
-
-          const moduleReports = getVisibleReports().filter((report) => report.module === moduleName);
-          if (!moduleReports.length) {
-            return;
-          }
-
-          selectedModule = moduleName;
-          selectedReportId = moduleReports[0].id;
-          renderSidebar();
-          renderTable();
-          updateViewer();
-        });
-      });
-
       document.querySelectorAll('.report-link').forEach((button) => {
         button.addEventListener('click', () => {
           const reportId = button.getAttribute('data-report-id');
@@ -902,15 +899,22 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
     });
 
     const compactWorkspace = window.matchMedia('(max-width: 1024px)');
+    const updateSidebarToggle = () => {
+      const collapsed = appRoot?.classList.contains('sidebar-collapsed') ?? false;
+      sidebarToggle?.setAttribute('aria-expanded', String(!collapsed));
+      sidebarToggle?.setAttribute('aria-label', collapsed ? 'Expandir sidebar' : 'Colapsar sidebar');
+    };
     /** @param {boolean} matches */
     const syncCompactWorkspace = (matches) => {
       appRoot?.classList.toggle('sidebar-collapsed', matches);
+      updateSidebarToggle();
     };
     syncCompactWorkspace(compactWorkspace.matches);
     compactWorkspace.addEventListener('change', (event) => syncCompactWorkspace(event.matches));
 
     sidebarToggle?.addEventListener('click', () => {
       appRoot?.classList.toggle('sidebar-collapsed');
+      updateSidebarToggle();
     });
 
     themeToggle?.addEventListener('click', () => {
