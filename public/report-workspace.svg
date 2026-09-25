@@ -1,0 +1,13 @@
+<svg viewBox="0 0 800 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Report Workspace">
+  <title>Report Workspace</title>
+  <style>
+    .main { font: italic 900 108px/1 Archivo, Arial Black, Arial, sans-serif; letter-spacing: -7px; }
+    .sub { font: italic 850 43px/1 Archivo, Arial Black, Arial, sans-serif; letter-spacing: 2px; }
+    .trace { fill: none; stroke: #4ca2ff; stroke-width: 2; stroke-dasharray: 65 210; filter: drop-shadow(0 0 4px #4ca2ff); animation: trace 5s linear infinite; }
+    @keyframes trace { to { stroke-dashoffset: -275px; } }
+    @media (prefers-reduced-motion: reduce) { .trace { animation: none; } }
+  </style>
+  <text class="main" x="10" y="105" fill="#FFFFFF">REPORT</text>
+  <text class="sub" x="335" y="153" fill="#79B9FF">WORKSPACE</text>
+  <path class="trace" d="M10 12h590l-24 110H10z" />
+</svg>

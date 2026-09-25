@@ -87,7 +87,7 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
       <section class="panel admin-table-panel" id="admin-table-panel" aria-labelledby="table-title">
         <div class="panel-head">
           <h2 id="table-title">Reportes registrados</h2>
-          <p>Tabla editable con paginacion y estado (1 activo / 0 inactivo).</p>
+          <p>Administra la disponibilidad de cada reporte.</p>
         </div>
 
         <div class="table-shell">
@@ -520,15 +520,15 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
         return;
       }
 
-      const activeRows = reports.filter((report) => report.status === 1);
-      const totalRows = activeRows.length;
+      const tableRows = reports;
+      const totalRows = tableRows.length;
       const totalPages = Math.max(1, Math.ceil(totalRows / PAGE_SIZE));
       if (currentPage > totalPages) {
         currentPage = totalPages;
       }
 
       const start = (currentPage - 1) * PAGE_SIZE;
-      const pageRows = activeRows.slice(start, start + PAGE_SIZE);
+      const pageRows = tableRows.slice(start, start + PAGE_SIZE);
 
       if (!totalRows) {
         reportsTableBody.innerHTML = '<tr><td colspan="6">No hay reportes registrados.</td></tr>';
@@ -542,7 +542,8 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
           const reportName = escapeHtml(report.name);
           const moduleName = escapeHtml(report.module);
           const platform = escapeHtml(report.platform);
-          const statusText = report.status === 1 ? '1' : '0';
+          const statusValue = report.status === 1 ? '1' : '0';
+          const statusLabel = report.status === 1 ? 'Activo' : 'Inactivo';
           const url = escapeHtml(report.url);
 
           if (isEditing) {
@@ -565,8 +566,8 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
                 </td>
                 <td>
                   <select class="table-input" data-edit-field="status" data-edit-id="${report.id}">
-                    <option value="1" ${report.status === 1 ? 'selected' : ''}>1</option>
-                    <option value="0" ${report.status === 0 ? 'selected' : ''}>0</option>
+                    <option value="1" ${report.status === 1 ? 'selected' : ''}>Activo</option>
+                    <option value="0" ${report.status === 0 ? 'selected' : ''}>Inactivo</option>
                   </select>
                 </td>
                 <td><input class="table-input" data-edit-field="url" data-edit-id="${report.id}" value="${url}" /></td>
@@ -583,11 +584,13 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
               <td>${reportName}</td>
               <td>${moduleName}</td>
               <td>${escapeHtml(platform.toUpperCase())}</td>
-              <td><span class="status-pill" data-state="${statusText}">${statusText}</span></td>
+              <td><span class="status-pill" data-state="${statusValue}">${statusLabel}</span></td>
               <td><a href="${url}" target="_blank" rel="noreferrer">Abrir</a></td>
               <td class="actions-cell">
                 <button class="mini-btn" data-action="edit" data-id="${report.id}" type="button">Editar</button>
-                <button class="mini-btn danger" data-action="delete" data-id="${report.id}" type="button">Eliminar</button>
+                <button class="mini-btn ${report.status === 1 ? 'danger' : 'success'}" data-action="toggle-status" data-id="${report.id}" type="button">
+                  ${report.status === 1 ? 'Desactivar' : 'Activar'}
+                </button>
               </td>
             </tr>
           `;
@@ -633,7 +636,7 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
         });
       });
 
-      reportsTableBody.querySelectorAll('[data-action="delete"]').forEach((button) => {
+      reportsTableBody.querySelectorAll('[data-action="toggle-status"]').forEach((button) => {
         button.addEventListener('click', () => {
           const reportId = button.getAttribute('data-id');
           if (!reportId) {
@@ -647,11 +650,12 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
 
             return {
               ...item,
-              status: 0
+              status: item.status === 1 ? 0 : 1
             };
           });
 
-          if (selectedReportId === reportId) {
+          const updatedReport = reports.find((item) => item.id === reportId);
+          if (selectedReportId === reportId && updatedReport?.status === 0) {
             selectedReportId = '';
           }
 
@@ -661,7 +665,7 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
           renderSidebar();
           renderTable();
           updateViewer();
-          showToast('Reporte desactivado (status 0).', 'success');
+          showToast(updatedReport?.status === 1 ? 'Reporte activado.' : 'Reporte desactivado.', 'success');
         });
       });
 
@@ -896,6 +900,14 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
         loginForm.reset();
       }
     });
+
+    const compactWorkspace = window.matchMedia('(max-width: 1024px)');
+    /** @param {boolean} matches */
+    const syncCompactWorkspace = (matches) => {
+      appRoot?.classList.toggle('sidebar-collapsed', matches);
+    };
+    syncCompactWorkspace(compactWorkspace.matches);
+    compactWorkspace.addEventListener('change', (event) => syncCompactWorkspace(event.matches));
 
     sidebarToggle?.addEventListener('click', () => {
       appRoot?.classList.toggle('sidebar-collapsed');
