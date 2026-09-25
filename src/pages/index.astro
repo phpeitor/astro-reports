@@ -93,8 +93,7 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
 
       <section class="panel admin-table-panel" id="admin-table-panel" aria-labelledby="table-title">
         <div class="panel-head">
-          <h2 id="table-title">Reportes registrados</h2>
-          <p>Administra la disponibilidad de cada reporte.</p>
+          <h2 id="table-title">Reportes</h2>
         </div>
 
         <div class="table-shell">
@@ -242,6 +241,10 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
       if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
       }
+      themeToggle?.setAttribute(
+        'aria-label',
+        document.documentElement.getAttribute('data-theme') === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro'
+      );
     }
 
     function saveReports() {
@@ -540,6 +543,10 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
 
       const start = (currentPage - 1) * PAGE_SIZE;
       const pageRows = tableRows.slice(start, start + PAGE_SIZE);
+      const editIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m4 20 4.2-1 10.6-10.6a2 2 0 0 0-2.8-2.8L5.4 16.2 4 20Z"></path><path d="m14.5 7.1 2.8 2.8"></path></svg>';
+      const powerIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2v9"></path><path d="M6.4 5.6a8 8 0 1 0 11.2 0"></path></svg>';
+      const saveIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"></path></svg>';
+      const cancelIcon = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></svg>';
 
       if (!totalRows) {
         reportsTableBody.innerHTML = '<tr><td colspan="6">No hay reportes registrados.</td></tr>';
@@ -587,8 +594,8 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
                 </td>
                 <td><input class="table-input" data-edit-field="url" data-edit-id="${report.id}" value="${url}" /></td>
                 <td class="actions-cell">
-                  <button class="mini-btn" data-action="save" data-id="${report.id}" type="button">Guardar</button>
-                  <button class="mini-btn ghost" data-action="cancel" data-id="${report.id}" type="button">Cancelar</button>
+                  <button class="mini-btn icon-btn success" data-action="save" data-id="${report.id}" type="button" aria-label="Guardar cambios" title="Guardar cambios">${saveIcon}</button>
+                  <button class="mini-btn icon-btn ghost" data-action="cancel" data-id="${report.id}" type="button" aria-label="Cancelar edición" title="Cancelar edición">${cancelIcon}</button>
                 </td>
               </tr>
             `;
@@ -602,9 +609,9 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
               <td><span class="status-pill" data-state="${statusValue}">${statusLabel}</span></td>
               <td><a href="${url}" target="_blank" rel="noreferrer">Abrir</a></td>
               <td class="actions-cell">
-                <button class="mini-btn" data-action="edit" data-id="${report.id}" type="button">Editar</button>
-                <button class="mini-btn ${report.status === 1 ? 'danger' : 'success'}" data-action="toggle-status" data-id="${report.id}" type="button">
-                  ${report.status === 1 ? 'Desactivar' : 'Activar'}
+                <button class="mini-btn icon-btn" data-action="edit" data-id="${report.id}" type="button" aria-label="Editar ${reportName}" title="Editar">${editIcon}</button>
+                <button class="mini-btn icon-btn ${report.status === 1 ? 'danger' : 'success'}" data-action="toggle-status" data-id="${report.id}" type="button" aria-label="${report.status === 1 ? 'Desactivar' : 'Activar'} ${reportName}" title="${report.status === 1 ? 'Desactivar' : 'Activar'}">
+                  ${powerIcon}
                 </button>
               </td>
             </tr>

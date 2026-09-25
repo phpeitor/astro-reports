@@ -1228,6 +1228,31 @@ body {
   border-color: color-mix(in oklab, var(--ok), #fff 45%);
   color: var(--ok);
 }
+.icon-btn {
+  display: inline-grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  place-items: center;
+  border-radius: .65rem;
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+.icon-btn svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.9;
+}
+.icon-btn:hover {
+  transform: translateY(-2px);
+  background: var(--bg-soft);
+  box-shadow: 0 10px 20px -15px currentColor;
+}
+.icon-btn:active { transform: translateY(0) scale(.94); }
+.icon-btn:focus-visible { outline: 3px solid color-mix(in oklab, currentColor, transparent 75%); outline-offset: 2px; }
 
 .dashboard-shell.sidebar-collapsed .brand-symbol { width: 2.5rem; }
 .dashboard-shell.sidebar-collapsed .sidebar-top { justify-content: center; }
@@ -1315,6 +1340,7 @@ body {
   .dashboard-shell .topbar { align-items: flex-start; flex-direction: column; }
   .dashboard-shell .topbar-actions { width: 100%; }
   .dashboard-shell .topbar-actions .ghost-btn { flex: 1; }
+  .dashboard-shell .topbar-actions .theme-toggle { flex: 0 0 2.75rem; }
   .dashboard-shell .viewer-head { align-items: flex-start; flex-direction: column; }
 
   .login-panel {
