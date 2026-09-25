@@ -10,6 +10,7 @@
 
 .site-title {
   width: auto;
+  max-width: 18.75rem;
   padding: .3rem .65rem;
   border-radius: .35rem;
   background: #fff;
@@ -19,6 +20,7 @@
   .sidebar {
     height: calc(100vh - var(--sl-nav-height));
     overflow: hidden;
+    z-index: 1 !important;
   }
 
   .sidebar-pane {
@@ -34,6 +36,12 @@
     background: var(--sl-color-accent);
   }
 }
+
+.phpeitor-footer {
+  position: relative;
+  z-index: 1000 !important;
+}
+
 
 @media (max-width: 50rem) {
   .site-title img { width: 14rem; }
