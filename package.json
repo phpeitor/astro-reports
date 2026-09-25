@@ -12,5 +12,9 @@
     "@astrojs/starlight": "^0.37.6",
     "@rive-app/canvas": "^2.43.1",
     "astro": "^5.2.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.3"
   }
 }

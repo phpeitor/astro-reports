@@ -1,7 +1,11 @@
 <section class="panel card-panel" aria-labelledby="form-title">
   <div class="panel-head">
-    <h2 id="form-title">Registrar Reporte</h2>
-    <p>Agrega nuevas visualizaciones por modulo de negocio.</p>
+    <span class="panel-icon" aria-hidden="true">+</span>
+    <div>
+      <p class="panel-kicker">Administración</p>
+      <h2 id="form-title">Nuevo reporte</h2>
+      <p>Conecta una visualización a tu workspace.</p>
+    </div>
   </div>
 
   <form id="report-form" class="report-form" novalidate>
@@ -41,7 +45,7 @@
       </select>
     </label>
 
-    <button class="primary-btn" type="submit">Guardar reporte</button>
+    <button class="primary-btn" type="submit">Guardar reporte <span aria-hidden="true">→</span></button>
     <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
   </form>
 </section>

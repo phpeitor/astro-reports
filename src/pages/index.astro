@@ -21,8 +21,8 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
       <div class="login-rive-frame">
         <canvas id="login-rive" data-rive-src={astroAnimationUrl} aria-label="Astronauta interactivo"></canvas>
         <p class="login-rive-status" id="login-rive-status">
-          <span></span>
-          Sistema preparado
+          <span class="login-rive-status__dot"></span>
+          <span class="login-rive-status__text">Sistema preparado</span>
         </p>
       </div>
     </div>
@@ -63,8 +63,8 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
     <main class="content-area">
       <header class="topbar">
         <div>
-          <p class="topbar-label">Plataforma de inteligencia</p>
-          <h2>Centro de Reportes Embebidos</h2>
+          <div class="workspace-status"><span></span> Workspace operativo</div>
+          <h2>Visor de Reportes</h2>
           <p class="session-note" id="session-note">Sesión inactiva</p>
         </div>
 
@@ -153,8 +153,6 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
     const loginPanel = document.querySelector('#login-panel');
     const loginForm = document.querySelector('#login-form');
     const loginMessage = document.querySelector('#login-message');
-    const loginUser = document.querySelector('#login-user');
-    const loginRole = document.querySelector('#login-role');
     const toast = document.querySelector('#toast');
     const appRoot = document.querySelector('#app-root');
     const sessionNote = document.querySelector('#session-note');
@@ -837,33 +835,33 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
 
       if (!user) {
         if (loginMessage) {
-          loginMessage.textContent = 'Ingrese un usuario valido.';
+          loginMessage.textContent = 'Ingrese un usuario valido';
           loginMessage.dataset.state = 'error';
         }
 
-        showToast('Ingrese un usuario válido.', 'error');
+        showToast('Ingrese un usuario válido', 'error');
         return;
       }
 
       const matchedUser = findUser(user);
       if (!matchedUser) {
         if (loginMessage) {
-          loginMessage.textContent = 'El usuario no existe en la lista permitida.';
+          loginMessage.textContent = 'El usuario no existe en la lista permitida';
           loginMessage.dataset.state = 'error';
         }
 
-        showToast('El usuario no existe en la lista permitida.', 'error');
+        showToast('El usuario no existe en la lista permitida', 'error');
 
         return;
       }
 
       if (matchedUser.role !== role) {
         if (loginMessage) {
-          loginMessage.textContent = 'El rol no coincide con el usuario seleccionado.';
+          loginMessage.textContent = 'El rol no coincide con el usuario seleccionado';
           loginMessage.dataset.state = 'error';
         }
 
-        showToast('El rol no coincide con el usuario seleccionado.', 'error');
+        showToast('El rol no coincide con el usuario seleccionado', 'error');
 
         return;
       }
@@ -972,7 +970,14 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
   </script>
 
   <script>
-    import { Alignment, EventType, Fit, Layout, Rive } from '@rive-app/canvas';
+    import {
+      Alignment,
+      EventType,
+      Fit,
+      Layout,
+      Rive,
+      type StateMachineInput
+    } from '@rive-app/canvas';
 
     const canvas = document.querySelector('#login-rive');
     const status = document.querySelector('#login-rive-status');
@@ -981,6 +986,11 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
     const loginRole = document.querySelector('#login-role');
     const loginButton = document.querySelector('#login-form .primary-btn');
     const docsLink = document.querySelector('.docs-login-link');
+    const statusText = document.querySelector('.login-rive-status__text');
+
+    const setStatus = (message: string) => {
+      if (statusText) statusText.textContent = message;
+    };
 
     if (canvas instanceof HTMLCanvasElement) {
       const rive = new Rive({
@@ -992,18 +1002,20 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
         layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
         onLoad: () => {
           rive.resizeDrawingSurfaceToCanvas();
-          const inputs = new Map(
-            (rive.stateMachineInputs('State Machine') ?? []).map((input) => [input.name, input])
+          const inputs = new Map<string, StateMachineInput>(
+            (rive.stateMachineInputs('State Machine') ?? []).map(
+              (input): [string, StateMachineInput] => [input.name, input]
+            )
           );
-          const setInput = (name, value) => {
+          const setInput = (name: string, value: boolean) => {
             const input = inputs.get(name);
-            if (input && 'value' in input) input.value = value;
+            if (input) input.value = value;
           };
-          const bindHover = (element, inputName) => {
+          const bindHover = (element: Element | null, inputName: string) => {
             element?.addEventListener('pointerenter', () => setInput(inputName, true));
             element?.addEventListener('pointerleave', () => setInput(inputName, false));
           };
-          const bindFocus = (element, inputName) => {
+          const bindFocus = (element: Element | null, inputName: string) => {
             element?.addEventListener('focus', () => setInput(inputName, true));
             element?.addEventListener('blur', () => setInput(inputName, false));
           };
@@ -1024,25 +1036,26 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
       });
 
       rive.on(EventType.RiveEvent, (event) => {
-        const name = event.data?.name;
+        const data = event.data;
+        const name = data && typeof data === 'object' && 'name' in data ? String(data.name) : '';
         if (!name || !status) return;
-        status.lastChild.textContent = ` ${String(name).replace(/([A-Z])/g, ' $1').trim()}`;
+        setStatus(name.replace(/([A-Z])/g, ' $1').trim());
       });
 
       const message = document.querySelector('#login-message');
-      if (message) {
+      if (message instanceof HTMLElement) {
         new MutationObserver(() => {
           if (!message.textContent || !status) return;
-          status.lastChild.textContent = message.dataset.state === 'error'
-            ? ' Verifica tus credenciales'
-            : ' Acceso autorizado';
+          setStatus(message.dataset.state === 'error' ? 'Verifica tus credenciales' : 'Acceso autorizado');
         }).observe(message, { childList: true, attributes: true });
       }
 
-      new MutationObserver(() => {
-        if (loginPanel?.hasAttribute('hidden')) rive.pause();
-        else rive.play();
-      }).observe(loginPanel, { attributes: true, attributeFilter: ['hidden'] });
+      if (loginPanel) {
+        new MutationObserver(() => {
+          if (loginPanel.hasAttribute('hidden')) rive.pause();
+          else rive.play();
+        }).observe(loginPanel, { attributes: true, attributeFilter: ['hidden'] });
+      }
     }
   </script>
 </DashboardLayout>
