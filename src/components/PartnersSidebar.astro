@@ -26,7 +26,10 @@ const partners = [
 
 <style>
   .partners-panel {
-    width: 100%;
+    box-sizing: border-box;
+    width: calc(
+      (100vw - var(--sl-sidebar-width) - 2 * var(--sl-content-pad-x) - 2 * var(--sl-sidebar-pad-x)) * .25
+    );
     padding: 1.5rem var(--sl-sidebar-pad-x) 2rem;
   }
   .partners-panel h2 {
@@ -41,13 +44,15 @@ const partners = [
   .partners-panel h2 span { color: #f43f5e; font-size: 1rem; }
   .partners-list { display: grid; gap: .65rem; }
   .partner-card {
+    box-sizing: border-box;
     display: grid;
+    width: 100%;
     min-height: 4.6rem;
     place-items: center;
     padding: .75rem;
     border: 1px solid var(--sl-color-gray-5);
     border-radius: .75rem;
-    color: var(--sl-color-white);
+    color: #fff !important;
     background: var(--sl-color-gray-6);
     font-family: Arial Black, Arial, sans-serif;
     font-size: clamp(.8rem, 1vw, 1.05rem);
@@ -60,7 +65,7 @@ const partners = [
     box-shadow: inset 0 -2px 0 rgba(244, 63, 94, .16);
   }
   :global([data-theme='light']) .partner-card {
-    color: #060c3b;
+    color: #060c3b !important;
     background: #f4f1eb;
   }
 </style>
