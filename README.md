@@ -8,34 +8,34 @@
 
 El repositorio contiene dos productos en una misma aplicación:
 
-| Area | Ruta | Propósito |
+| Área | Ruta | Propósito |
 | --- | --- | --- |
-| Visor de Reportes | `/` | Login por rol, catalogo, administracion y visualizacion de reportes |
-| Docs | `/docs/` | Documentacion tecnica y funcional basada en Starlight |
+| Visor de Reportes | `/` | Login por rol, catálogo, administración y visualización de reportes |
+| Docs | `/docs/` | Documentación técnica y funcional basada en Starlight |
 
 ## Stack
 
 | Tecnología | Uso |
 | --- | --- |
-| [Astro 5](https://astro.build/) | Renderizado estatico, componentes y bundling |
-| [Starlight](https://starlight.astro.build/) | Experiencia de documentacion |
-| [Rive Canvas](https://rive.app/docs/runtimes/web/) | Animacion interactiva del login |
-| TypeScript | Modelo de datos y validacion estatica |
+| [Astro 5](https://astro.build/) | Renderizado estático, componentes y bundling |
+| [Starlight](https://starlight.astro.build/) | Experiencia de documentación |
+| [Rive Canvas](https://rive.app/docs/runtimes/web/) | Animación interactiva del login |
+| TypeScript | Modelo de datos y validación estática |
 | CSS nativo | Sistema visual, temas y responsive design |
 
 ## Funcionalidad
 
 - Login de demostración con permisos por rol.
-- Navegación por modulo y reporte.
-- Alta, edicion, activacion y desactivacion de reportes.
-- Deteccion automatica de plataforma a partir de la URL.
-- Visualizacion por iframe cuando el proveedor permite embedding.
+- Navegación por módulo y reporte.
+- Alta, edición, activación y desactivación de reportes.
+- Detección automática de plataforma a partir de la URL.
+- Visualización por iframe cuando el proveedor permite embedding.
 - Fallback a enlace externo cuando el proveedor bloquea iframes.
 - Temas claro y oscuro persistidos en el navegador.
 - Sidebar responsive, colapsable y accesible.
-- Tabla administrativa paginada con estados semanticos.
-- Login Rive conectado a hover, foco, tema y eventos de la animacion.
-- Documentacion Starlight con busqueda, partners y footer personalizado.
+- Tabla administrativa paginada con estados semánticos.
+- Login Rive conectado a hover, foco, tema y eventos de la animación.
+- Documentación Starlight con búsqueda, partners y footer personalizado.
 
 ## Inicio rápido
 
@@ -51,9 +51,9 @@ npm install
 npm run dev
 ```
 
-La aplicacion queda disponible en `http://localhost:4321`.
+La aplicación queda disponible en `http://localhost:4321`.
 
-No inicies una segunda instancia si el puerto `4321` ya esta ocupado. Astro intentara usar otro puerto y podrias terminar revisando una version distinta de la aplicacion.
+No inicies una segunda instancia si el puerto `4321` ya está ocupado. Astro intentará usar otro puerto y podrías terminar revisando una versión distinta de la aplicación.
 
 ### Validación
 
@@ -61,21 +61,21 @@ No inicies una segunda instancia si el puerto `4321` ya esta ocupado. Astro inte
 npm run validate
 ```
 
-Este comando ejecuta el diagnostico de Astro/TypeScript y luego genera el build de produccion.
+Este comando ejecuta el diagnóstico de Astro/TypeScript y luego genera el build de producción.
 
 ## Scripts
 
-| Comando | Descripcion |
+| Comando | Descripción |
 | --- | --- |
 | `npm run dev` | Inicia el servidor de desarrollo con HMR |
 | `npm run check` | Ejecuta `astro check` |
-| `npm run build` | Genera el sitio estatico en `dist/` |
+| `npm run build` | Genera el sitio estático en `dist/` |
 | `npm run preview` | Sirve localmente el build generado |
 | `npm run validate` | Ejecuta check y build en secuencia |
 
 ## Usuarios de demostración
 
-La autenticacion actual es una simulacion frontend sin contrasena. Los usuarios se definen en `src/data/initialReports.ts`.
+La autenticación actual es una simulación frontend sin contraseña. Los usuarios se definen en `src/data/initialReports.ts`.
 
 | Usuario | Rol | Alcance |
 | --- | --- | --- |
@@ -84,7 +84,7 @@ La autenticacion actual es una simulacion frontend sin contrasena. Los usuarios 
 | `finanzas` | Finanzas | Visualiza reportes activos de Finanzas |
 | `comercial` | Comercial | Visualiza reportes activos de Comercial |
 
-> Este mecanismo no es autenticacion productiva. No almacena contrasenas, no crea una sesion de servidor y no debe usarse para proteger informacion privada.
+> Este mecanismo no es autenticación productiva. No almacena contraseñas, no crea una sesión de servidor y no debe usarse para proteger información privada.
 
 ## Arquitectura
 
@@ -134,13 +134,13 @@ src/
 
 | Archivo | Responsabilidad |
 | --- | --- |
-| `src/pages/index.astro` | Estado del cliente, permisos, persistencia, render de catalogo y eventos |
-| `src/data/initialReports.ts` | Tipos, usuarios demo y catalogo inicial |
-| `src/components/Sidebar.astro` | Marca, navegacion y sesion activa |
+| `src/pages/index.astro` | Estado del cliente, permisos, persistencia, render de catálogo y eventos |
+| `src/data/initialReports.ts` | Tipos, usuarios demo y catálogo inicial |
+| `src/components/Sidebar.astro` | Marca, navegación y sesión activa |
 | `src/components/ReportForm.astro` | Registro de reportes |
 | `src/components/ReportViewer.astro` | Iframe y fallback de apertura externa |
 | `src/styles/global.css` | Sistema visual del workspace y login |
-| `src/pages/docs/index.astro` | Contenido y navegacion de la documentacion |
+| `src/pages/docs/index.astro` | Contenido y navegación de la documentación |
 | `astro.config.mjs` | Starlight, favicon, componentes personalizados y servidor |
 
 ## Modelo de datos
@@ -172,7 +172,7 @@ type BiPlatform =
   | 'other';
 ```
 
-Estrategias de visualizacion:
+Estrategias de visualización:
 
 ```ts
 type EmbedStrategy =
@@ -186,24 +186,24 @@ type EmbedStrategy =
 
 ## Plataformas y embedding
 
-| Plataforma | Estrategia demo | Consideracion |
+| Plataforma | Estrategia demo | Consideración |
 | --- | --- | --- |
-| Power BI | `iframe-public` | Requiere un enlace Publish to web valido |
-| Tableau Public | `iframe-public` | Usa una vista publica con `showVizHome=no` |
+| Power BI | `iframe-public` | Requiere un enlace Publish to web válido |
+| Tableau Public | `iframe-public` | Usa una vista pública con `showVizHome=no` |
 | Looker Studio | `iframe-public` | Debe utilizar la URL `/embed/reporting/...` |
 | Apache Superset | `external-link` | La instancia demo usa `X-Frame-Options: SAMEORIGIN` |
-| Qlik Sense | `external-link` | La galeria publica bloquea framing cross-origin |
+| Qlik Sense | `external-link` | La galería pública bloquea framing cross-origin |
 | Grafana | `external-link` | Grafana Play declara `frame-ancestors 'none'` |
 
-Los reportes publicos son recursos de terceros y pueden cambiar, expirar o modificar sus politicas de embedding sin previo aviso.
+Los reportes públicos son recursos de terceros y pueden cambiar, expirar o modificar sus políticas de embedding sin previo aviso.
 
 ## Persistencia local
 
-La aplicacion es frontend-only y usa estas claves:
+La aplicación es solo frontend y usa estas claves:
 
 | Clave | Contenido |
 | --- | --- |
-| `bi-reports-v2` | Catalogo de reportes y cambios administrativos |
+| `bi-reports-v2` | Catálogo de reportes y cambios administrativos |
 | `bi-auth-v1` | Usuario y rol activos |
 | `bi-theme-v1` | Tema claro u oscuro |
 
@@ -220,7 +220,7 @@ location.reload();
 
 El login carga `src/content/docs/astro.riv` con `@rive-app/canvas`.
 
-Configuracion esperada del archivo:
+Configuración esperada del archivo:
 
 | Recurso | Nombre |
 | --- | --- |
@@ -229,17 +229,17 @@ Configuracion esperada del archivo:
 
 La UI conecta inputs del state machine con hover, foco, cambio de tema y controles del formulario. Los eventos emitidos por Rive actualizan el indicador de estado del login.
 
-El runtime marca algunos metodos de State Machine como legacy. Actualmente son necesarios para este archivo `.riv`; una migracion futura debe mover la animacion a View Model/Data Binding.
+El runtime marca algunos métodos de State Machine como legacy. Actualmente son necesarios para este archivo `.riv`; una migración futura debe mover la animación a View Model/Data Binding.
 
 ## Documentación Starlight
 
-La documentacion vive en `/docs/` e incluye:
+La documentación vive en `/docs/` e incluye:
 
-- Navegacion lateral con scroll independiente.
-- Busqueda con Pagefind.
+- Navegación lateral con scroll independiente.
+- Búsqueda con Pagefind.
 - Columna de partners personalizada.
 - Footer full-width con SVG animado.
-- Documentacion funcional del dataset RENIEC.
+- Documentación funcional del dataset RENIEC.
 
 No publiques credenciales, tokens de embedding ni datos personales dentro del contenido de Starlight.
 
@@ -249,7 +249,7 @@ No publiques credenciales, tokens de embedding ni datos personales dentro del co
 npm run validate
 ```
 
-El resultado se genera en `dist/` y puede servirse desde Apache, Nginx, un bucket estatico o una plataforma compatible con sitios estaticos.
+El resultado se genera en `dist/` y puede servirse desde Apache, Nginx, un bucket estático o una plataforma compatible con sitios estáticos.
 
 Ejemplo para Apache:
 
@@ -258,29 +258,29 @@ DocumentRoot "C:/Apache24/htdocs/astro-reports/dist"
 DirectoryIndex index.html
 ```
 
-La integración de sitemap requiere configurar `site` en `astro.config.mjs`. Mientras no exista una URL publica definitiva, Astro omitira el sitemap y mostrara un warning durante el build.
+La integración de sitemap requiere configurar `site` en `astro.config.mjs`. Mientras no exista una URL pública definitiva, Astro omitirá el sitemap y mostrará un warning durante el build.
 
 ## Seguridad y paso a producción
 
 Antes de usar el proyecto con reportes privados:
 
-1. Sustituir el login demo por autenticacion de servidor.
+1. Sustituir el login demo por autenticación de servidor.
 2. Mover permisos y filtrado de reportes al backend.
-3. Persistir el catalogo en una base de datos.
-4. Emitir tokens de corta duracion para Power BI, Tableau o Superset.
+3. Persistir el catálogo en una base de datos.
+4. Emitir tokens de corta duración para Power BI, Tableau o Superset.
 5. Validar y permitir solo dominios de embedding autorizados.
-6. Agregar CSP, auditoria, expiracion de sesion y proteccion CSRF.
-7. Evitar `Publish to web` para informacion interna o sensible.
+6. Agregar CSP, auditoría, expiración de sesión y protección CSRF.
+7. Evitar `Publish to web` para información interna o sensible.
 
 ## Solución de problemas
 
-### El puerto 4321 esta ocupado
+### El puerto 4321 está ocupado
 
 Ya existe un servidor Astro activo. Cierra la instancia anterior antes de ejecutar nuevamente `npm run dev`.
 
 ### No aparecen los reportes nuevos de la semilla
 
-El catalogo persistido tiene prioridad. Elimina `bi-reports-v2` desde DevTools y recarga.
+El catálogo persistido tiene prioridad. Elimina `bi-reports-v2` desde DevTools y recarga.
 
 ### Un reporte no aparece en iframe
 
@@ -298,4 +298,4 @@ Antes de entregar cambios:
 npm run validate
 ```
 
-El proyecto debe completar `astro check` sin errores y generar correctamente todas las rutas estaticas.
+El proyecto debe completar `astro check` sin errores y generar correctamente todas las rutas estáticas.
