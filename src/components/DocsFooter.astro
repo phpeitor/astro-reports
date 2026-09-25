@@ -28,6 +28,7 @@
 
 <style>
   .phpeitor-footer {
+    box-sizing: border-box;
     width: 100% !important;
     max-width: none !important;
     position: relative;
@@ -35,7 +36,7 @@
     left: 0 !important;
     margin: 5rem 0 0 !important;
     margin-left: 0 !important;
-    padding: 3.5rem 3.5rem 1.25rem;
+    padding: 2rem 3.5rem .5rem;
     color: #20233f;
     background: #f1ebdf;
     overflow: hidden;
@@ -72,23 +73,23 @@
     position: relative;
     display: grid;
     place-items: center;
-    margin-top: 4rem;
-    width: 100%;
-    height: clamp(11rem, 30vw, 24rem);
+    margin: 1.5rem -3.5rem 0;
+    width: calc(100% + 7rem);
+    height: clamp(14rem, 24vw, 28rem);
     overflow: hidden;
     user-select: none;
   }
   .phpeitor-footer__mark::before {
     content: none;
   }
-  .phpeitor-footer__mark svg { width: 100%; height: 100%; overflow: visible; }
+  .phpeitor-footer__mark svg { width: 106%; height: 100%; max-width: none; overflow: visible; }
   .phpeitor-word,
   .phpeitor-trace {
     font-family: Arial Black, Arial, sans-serif;
-    font-size: 190px;
+    font-size: 230px;
     font-style: italic;
     font-weight: 900;
-    letter-spacing: -10px;
+    letter-spacing: -14px;
   }
   .phpeitor-word { fill: #060c3b; stroke: #060c3b; stroke-width: 3; }
   .phpeitor-trace {
@@ -108,6 +109,7 @@
   }
   @media (max-width: 640px) {
     .phpeitor-footer { margin-left: 0; padding-inline: 1.5rem; }
+    .phpeitor-footer__mark { margin-inline: -1.5rem; width: calc(100% + 3rem); }
     .phpeitor-footer__inner { align-items: flex-start; flex-direction: column; }
     .phpeitor-footer__bottom { align-items: flex-start; flex-direction: column; gap: .5rem; }
   }
