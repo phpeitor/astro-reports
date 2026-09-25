@@ -19,6 +19,33 @@ const sidebar = [
   {
     label: 'Integracion',
     items: [{ label: 'Uso en el visor', link: '/docs/#embedding' }]
+  },
+  {
+    label: 'Empresa',
+    items: [
+      { label: 'Acerca de nosotros', link: '/docs/#acerca-de-nosotros' },
+      { label: 'Contáctenos', link: '/docs/#contactenos' },
+      { label: 'Novedades', link: '/docs/#novedades' }
+    ]
+  },
+  {
+    label: 'Políticas',
+    items: [
+      { label: 'Política de privacidad', link: '/docs/#privacidad' },
+      { label: 'Política de pago', link: '/docs/#pago' },
+      { label: 'Política de envío', link: '/docs/#envio' },
+      { label: 'Política de devolución', link: '/docs/#devolucion' },
+      { label: 'Política de retorno', link: '/docs/#retorno' }
+    ]
+  },
+  {
+    label: 'Legal y soporte',
+    items: [
+      { label: 'Servicio al cliente', link: '/docs/#servicio-al-cliente' },
+      { label: 'Términos de uso', link: '/docs/#terminos-de-uso' },
+      { label: 'Términos y condiciones', link: '/docs/#terminos-y-condiciones' },
+      { label: 'Libro de reclamaciones', link: '/docs/#libro-de-reclamaciones' }
+    ]
   }
 ];
 ---
@@ -93,9 +120,43 @@ const sidebar = [
   <h2 id="embedding">Uso en el visor BI</h2>
   <p>El dashboard puede registrarse desde el visor como un reporte externo. Para contenido privado se necesita una integracion oficial y un backend que emita tokens de corta duracion.</p>
 
-  <script is:inline>
-    document.querySelector('main > .content-panel:first-child')?.remove();
+  <h2 id="acerca-de-nosotros">Acerca de nosotros</h2>
+  <p>PHPeitor crea soluciones digitales, plantillas y herramientas para equipos que necesitan convertir datos y operaciones en experiencias claras.</p>
 
+  <h2 id="contactenos">Contáctenos</h2>
+  <p>Escríbenos para consultas comerciales, soporte técnico o información sobre integraciones. Responderemos con el canal adecuado para tu solicitud.</p>
+
+  <h2 id="novedades">Novedades</h2>
+  <p>Consulta las nuevas publicaciones, mejoras de producto y actualizaciones de nuestros servicios digitales.</p>
+
+  <h2 id="privacidad">Política de privacidad</h2>
+  <p>Tratamos los datos únicamente para prestar el servicio solicitado, mejorar la experiencia y cumplir las obligaciones aplicables. No publiques credenciales ni información personal en esta documentación.</p>
+
+  <h2 id="pago">Política de pago</h2>
+  <p>Los pagos deben confirmarse mediante los canales autorizados. Conserva el comprobante y verifica el detalle del pedido antes de finalizar.</p>
+
+  <h2 id="envio">Política de envío</h2>
+  <p>Las condiciones y tiempos de entrega se informan antes de confirmar cada pedido y pueden variar según destino y disponibilidad.</p>
+
+  <h2 id="devolucion">Política de devolución</h2>
+  <p>Las solicitudes de devolución deben presentarse por el canal de soporte indicando el pedido, el motivo y la evidencia correspondiente.</p>
+
+  <h2 id="retorno">Política de retorno</h2>
+  <p>Coordinaremos el retorno de productos o servicios cuando corresponda, siguiendo las condiciones comunicadas al momento de la compra.</p>
+
+  <h2 id="servicio-al-cliente">Servicio al cliente</h2>
+  <p>Nuestro equipo orienta sobre pedidos, accesos, incidencias y uso de las plataformas. Incluye siempre una descripción concreta para agilizar la atención.</p>
+
+  <h2 id="terminos-de-uso">Términos de uso</h2>
+  <p>Usa este sitio de forma responsable y no intentes acceder a información, cuentas o sistemas sin autorización.</p>
+
+  <h2 id="terminos-y-condiciones">Términos y condiciones</h2>
+  <p>La contratación de productos o servicios queda sujeta a las condiciones específicas presentadas durante el proceso de compra y a la normativa aplicable.</p>
+
+  <h2 id="libro-de-reclamaciones">Libro de reclamaciones</h2>
+  <p>Si deseas registrar una queja o reclamo, solicita el formulario correspondiente a través del canal de atención al cliente. Recibirás una constancia de tu registro.</p>
+
+  <script is:inline>
     const sections = [...document.querySelectorAll('main h2[id]')];
     const navigationLinks = [...document.querySelectorAll('.sidebar-content a[href^="/docs/"]')];
     const sectionLinks = navigationLinks.filter((link) => link.getAttribute('href')?.includes('#'));

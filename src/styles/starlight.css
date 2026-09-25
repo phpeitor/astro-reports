@@ -22,15 +22,7 @@
 }
 
 @media (min-width: 50rem) {
-  .sidebar {
-    height: calc(100vh - var(--sl-nav-height));
-    overflow: hidden;
-    z-index: 1 !important;
-  }
-
   .sidebar-pane {
-    height: 100%;
-    overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--sl-color-accent) transparent;
   }
@@ -47,13 +39,8 @@
   z-index: 1000 !important;
 }
 
-/* The fixed header is already part of the page flow in this layout. */
-.page > .main-frame {
-  padding-block-start: 0 !important;
-}
-
-/* Remove only Starlight's generated title panel, not the documentation panel. */
-.main-pane main > .content-panel:has(h1#_top) {
+/* Remove Starlight's generated title panel; the docs page renders its own title. */
+.main-pane main > .content-panel:first-child {
   display: none !important;
 }
 
