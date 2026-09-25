@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "check": "astro check",
+    "validate": "npm run check && npm run build"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.37.6",
