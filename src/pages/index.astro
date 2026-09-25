@@ -69,8 +69,15 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
         </div>
 
         <div class="topbar-actions">
-          <button class="ghost-btn" type="button" id="theme-toggle" aria-label="Cambiar tema">
-            Cambiar tema
+          <button class="ghost-btn theme-toggle" type="button" id="theme-toggle" aria-label="Activar tema oscuro" title="Cambiar tema">
+            <svg class="theme-icon theme-icon--sun" aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="3.5"></circle>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path>
+            </svg>
+            <svg class="theme-icon theme-icon--moon" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.5 8.5 0 1 0 20.2 15.2Z"></path>
+            </svg>
+            <span class="sr-only">Cambiar tema</span>
           </button>
           <button class="ghost-btn ghost-danger" type="button" id="logout-btn">Salir</button>
         </div>
@@ -921,6 +928,7 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
       const nextTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', nextTheme);
       localStorage.setItem(THEME_KEY, nextTheme);
+      themeToggle.setAttribute('aria-label', nextTheme === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro');
     });
 
     reportForm?.addEventListener('submit', (event) => {
