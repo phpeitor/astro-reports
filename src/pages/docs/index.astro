@@ -5,7 +5,7 @@ const sidebar = [
   {
     label: 'PHPeitor',
     items: [
-      { label: 'RENIEC', link: '/docs/' },
+      { label: 'RENIEC', link: '/docs/#resumen' },
       { label: 'Acceso a la fuente', link: '/docs/#acceso' }
     ]
   },
@@ -92,7 +92,7 @@ const sidebar = [
   <h2 id="embedding">Uso en el visor BI</h2>
   <p>El dashboard puede registrarse desde el visor como un reporte externo. Para contenido privado se necesita una integracion oficial y un backend que emita tokens de corta duracion.</p>
 
-  <script>
+  <script is:inline>
     const sections = [...document.querySelectorAll('main h2[id]')];
     const navigationLinks = [...document.querySelectorAll('.sidebar-content a[href^="/docs/"]')];
     const sectionLinks = navigationLinks.filter((link) => link.getAttribute('href')?.includes('#'));
@@ -105,15 +105,12 @@ const sidebar = [
         if (section.offsetTop <= marker) current = section.id;
       }
 
-      navigationLinks.forEach((link) => link.removeAttribute('aria-current'));
       sectionLinks.forEach((link) => {
         const isCurrent = link.getAttribute('href')?.endsWith(`#${current}`);
-        if (isCurrent) link.setAttribute('aria-current', 'page');
+        if (isCurrent && link.getAttribute('aria-current') !== 'page') link.setAttribute('aria-current', 'page');
+        if (!isCurrent && link.hasAttribute('aria-current')) link.removeAttribute('aria-current');
       });
 
-      if (!window.location.hash) {
-        navigationLinks.find((link) => link.getAttribute('href') === '/docs/')?.setAttribute('aria-current', 'page');
-      }
     };
 
     window.addEventListener('scroll', updateActiveSection, { passive: true });
@@ -122,6 +119,9 @@ const sidebar = [
       navigationLinks.forEach((item) => item.removeAttribute('aria-current'));
       link.setAttribute('aria-current', 'page');
     }));
+    const sidebar = document.querySelector('.sidebar-content');
+    const sidebarObserver = sidebar && new MutationObserver(updateActiveSection);
+    sidebarObserver?.observe(sidebar, { subtree: true, attributes: true, attributeFilter: ['aria-current'] });
     updateActiveSection();
   </script>
 

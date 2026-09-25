@@ -8,6 +8,7 @@ export default defineConfig({
       description: 'Documentacion del dataset PHPeitor',
       logo: { src: './src/content/docs/phpeitor-docs.svg', alt: 'Docs PHPeitor', replacesTitle: true },
       customCss: ['./src/styles/starlight.css'],
+      components: { Footer: './src/components/DocsFooter.astro' },
       defaultLocale: 'root',
       locales: {
         root: { label: 'Español', lang: 'es' }
@@ -15,7 +16,7 @@ export default defineConfig({
       sidebar: [
         {
           label: 'PHPeitor',
-          items: [{ label: 'RENIEC', link: '/docs/' }]
+          items: [{ label: 'RENIEC', link: '/docs/#resumen' }]
         }
       ]
     })

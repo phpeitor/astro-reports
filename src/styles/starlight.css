@@ -2,3 +2,12 @@
   --sl-font: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --sl-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+
+.site-title img {
+  width: 18rem;
+  max-height: 4.5rem;
+}
+
+@media (max-width: 50rem) {
+  .site-title img { width: 14rem; }
+}

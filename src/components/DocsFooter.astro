@@ -1,0 +1,80 @@
+<footer class="phpeitor-footer">
+  <div class="phpeitor-footer__inner">
+    <div class="phpeitor-footer__brand">
+      <span class="phpeitor-footer__logo"><img src="/phpeitor-docs.svg" alt="Docs PHPeitor" /></span>
+      <strong>PHPeitor Docs</strong>
+      <span>Documentación del dataset RENIEC</span>
+    </div>
+    <nav aria-label="Enlaces del sitio" class="phpeitor-footer__links">
+      <a href="/docs/">Documentación</a>
+      <a href="/docs/#modelo">Dataset</a>
+      <a href="/">Visor BI</a>
+      <a href="http://161.132.4.164:8090/login/" target="_blank" rel="noreferrer">PHPeitor</a>
+    </nav>
+  </div>
+  <div class="phpeitor-footer__bottom">
+    <span>© 2026 PHPeitor. Uso interno.</span>
+    <span>Construido con Astro y Starlight.</span>
+  </div>
+  <div class="phpeitor-footer__mark" aria-hidden="true">PHPEITOR</div>
+</footer>
+
+<style>
+  .phpeitor-footer {
+    width: 100vw;
+    position: relative;
+    left: 0;
+    margin-top: 5rem;
+    margin-left: calc(-1 * var(--sl-sidebar-width));
+    padding: 3.5rem max(1.5rem, calc((100% - 72rem) / 2)) 1.25rem;
+    color: #d8dce6;
+    background: #17181c;
+    overflow: hidden;
+  }
+  .phpeitor-footer::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #f43f5e 0 25%, #4052e8 25% 75%, #f43f5e 75%);
+    content: '';
+  }
+  .phpeitor-footer__inner,
+  .phpeitor-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+  .phpeitor-footer__brand strong,
+  .phpeitor-footer__brand span { display: block; }
+  .phpeitor-footer__logo { width: 13rem; padding: .45rem .75rem; margin-bottom: 1.1rem; background: #fff; border-radius: .25rem; }
+  .phpeitor-footer__logo img { display: block; width: 100%; height: auto; }
+  .phpeitor-footer__brand strong { color: #fff; font-size: 1.1rem; }
+  .phpeitor-footer__brand span,
+  .phpeitor-footer__bottom { color: #9298a8; font-size: .8rem; }
+  .phpeitor-footer__links { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+  .phpeitor-footer__links a { color: #d8dce6; font-size: .85rem; text-decoration: none; }
+  .phpeitor-footer__links a:hover { color: #f43f5e; }
+  .phpeitor-footer__bottom { padding-top: 2rem; margin-top: 2rem; border-top: 1px solid #30323a; }
+  .phpeitor-footer__mark {
+    margin-top: 4rem;
+    color: #282a2f;
+    font-size: clamp(5rem, 18vw, 14rem);
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: -.09em;
+    line-height: .7;
+    text-align: center;
+    transform: skewX(-10deg);
+    user-select: none;
+  }
+  @media (max-width: 640px) {
+    .phpeitor-footer { margin-left: 0; }
+    .phpeitor-footer__inner { align-items: flex-start; flex-direction: column; }
+    .phpeitor-footer__bottom { align-items: flex-start; flex-direction: column; gap: .5rem; }
+  }
+</style>
