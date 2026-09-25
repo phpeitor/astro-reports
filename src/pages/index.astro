@@ -4,23 +4,39 @@ import ReportForm from '../components/ReportForm.astro';
 import ReportViewer from '../components/ReportViewer.astro';
 import { initialReports, users } from '../data/initialReports';
 import DashboardLayout from '../layouts/DashboardLayout.astro';
+import astroAnimationUrl from '../content/docs/astro.riv?url';
 
 const serializedReports = JSON.stringify(initialReports).replace(/</g, '\\u003c');
 const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
 ---
 
-<DashboardLayout title="BI Reports Hub | Astro">
+<DashboardLayout title="Reports Hub | Astro">
   <section class="panel login-panel" id="login-panel">
     <div class="login-copy">
-      <p class="topbar-label">Acceso por rol</p>
-      <h2>Ingresar al Visor de Reportes</h2>
-      <p>Admin registra y visualiza. Operaciones, Finanzas y Comercial solo ven su propio menu y sus reportes.</p>
+      <div class="login-copy-header">
+        <p class="topbar-label">PHPEITOR · REPORTES</p>
+        <h1>Datos listos para despegar</h1>
+      </div>
+
+      <div class="login-rive-frame">
+        <canvas id="login-rive" data-rive-src={astroAnimationUrl} aria-label="Astronauta interactivo"></canvas>
+        <p class="login-rive-status" id="login-rive-status">
+          <span></span>
+          Sistema preparado
+        </p>
+      </div>
     </div>
 
     <form id="login-form" class="login-form" novalidate>
+      <header class="login-form-header">
+        <span>Acceso seguro</span>
+        <h2>Bienvenido</h2>
+        <p>Ingresa con tu usuario y perfil asignado.</p>
+      </header>
+
       <label class="field">
         <span>Usuario</span>
-        <input id="login-user" name="user" type="text" placeholder="administrador" autocomplete="off" required />
+        <input id="login-user" name="user" type="text" placeholder="administrador" autocomplete="username" required />
       </label>
 
       <label class="field">
@@ -34,7 +50,7 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
       </label>
 
       <button class="primary-btn" type="submit">Entrar</button>
-      <a class="docs-login-link" href="/docs/">Consultar documentación de PHPeitor</a>
+      <a class="docs-login-link" href="/docs/">Explorar documentación</a>
       <p class="form-message" id="login-message" role="status" aria-live="polite"></p>
     </form>
   </section>
@@ -952,6 +968,81 @@ const serializedUsers = JSON.stringify(users).replace(/</g, '\\u003c');
       renderSidebar();
       renderTable();
       updateViewer();
+    }
+  </script>
+
+  <script>
+    import { Alignment, EventType, Fit, Layout, Rive } from '@rive-app/canvas';
+
+    const canvas = document.querySelector('#login-rive');
+    const status = document.querySelector('#login-rive-status');
+    const loginPanel = document.querySelector('#login-panel');
+    const loginUser = document.querySelector('#login-user');
+    const loginRole = document.querySelector('#login-role');
+    const loginButton = document.querySelector('#login-form .primary-btn');
+    const docsLink = document.querySelector('.docs-login-link');
+
+    if (canvas instanceof HTMLCanvasElement) {
+      const rive = new Rive({
+        src: canvas.dataset.riveSrc,
+        canvas,
+        artboard: 'Astronaut',
+        stateMachines: 'State Machine',
+        autoplay: true,
+        layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
+        onLoad: () => {
+          rive.resizeDrawingSurfaceToCanvas();
+          const inputs = new Map(
+            (rive.stateMachineInputs('State Machine') ?? []).map((input) => [input.name, input])
+          );
+          const setInput = (name, value) => {
+            const input = inputs.get(name);
+            if (input && 'value' in input) input.value = value;
+          };
+          const bindHover = (element, inputName) => {
+            element?.addEventListener('pointerenter', () => setInput(inputName, true));
+            element?.addEventListener('pointerleave', () => setInput(inputName, false));
+          };
+          const bindFocus = (element, inputName) => {
+            element?.addEventListener('focus', () => setInput(inputName, true));
+            element?.addEventListener('blur', () => setInput(inputName, false));
+          };
+
+          setInput('lightToggle', document.documentElement.dataset.theme !== 'dark');
+          bindHover(canvas, 'orbHovering');
+          bindFocus(loginUser, 'isLaptopHovered');
+          bindFocus(loginRole, 'paperHovered');
+          bindHover(loginButton, 'isTimelineHovered');
+          bindHover(docsLink, 'pencilHovered');
+
+          new MutationObserver(() => {
+            setInput('lightToggle', document.documentElement.dataset.theme !== 'dark');
+          }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+          new ResizeObserver(() => rive.resizeDrawingSurfaceToCanvas()).observe(canvas);
+        }
+      });
+
+      rive.on(EventType.RiveEvent, (event) => {
+        const name = event.data?.name;
+        if (!name || !status) return;
+        status.lastChild.textContent = ` ${String(name).replace(/([A-Z])/g, ' $1').trim()}`;
+      });
+
+      const message = document.querySelector('#login-message');
+      if (message) {
+        new MutationObserver(() => {
+          if (!message.textContent || !status) return;
+          status.lastChild.textContent = message.dataset.state === 'error'
+            ? ' Verifica tus credenciales'
+            : ' Acceso autorizado';
+        }).observe(message, { childList: true, attributes: true });
+      }
+
+      new MutationObserver(() => {
+        if (loginPanel?.hasAttribute('hidden')) rive.pause();
+        else rive.play();
+      }).observe(loginPanel, { attributes: true, attributeFilter: ['hidden'] });
     }
   </script>
 </DashboardLayout>
